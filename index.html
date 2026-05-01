@@ -4,7 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VoteIQ — India Election Process Guide</title>
+<meta name="description" content="VoteIQ: Interactive guide to India's election process. Learn about voter registration, EVM, VVPAT, ECI, timelines, quiz, and countdown timers.">
+<meta name="keywords" content="India election, voter registration, ECI, EVM, VVPAT, Lok Sabha, democracy, voting guide">
+<meta name="author" content="VoteIQ">
+<meta property="og:title" content="VoteIQ — India Election Process Guide">
+<meta property="og:description" content="Explore the complete Indian election process with interactive timelines, quizzes, and real-time countdowns.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#080D1A">
+<!-- Preconnect for performance -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.googletagmanager.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VOTEIQ2024"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VOTEIQ2024');
+  /** @param {string} eventName @param {Object} params */
+  function trackEvent(eventName, params) {
+    try { gtag('event', eventName, params); } catch(e) { console.warn('Analytics error:', e); }
+  }
+</script>
+<!-- Google Charts -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
 :root {
   --bg: #080D1A;
@@ -255,6 +280,15 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 .pulse{animation:pulse 2s infinite}
 
+/* FOCUS / ACCESSIBILITY */
+*:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.skip-link{position:absolute;top:-100px;left:16px;background:var(--accent);color:#000;font-weight:600;font-size:14px;padding:10px 20px;border-radius:0 0 8px 8px;z-index:9999;transition:top .2s;text-decoration:none}
+.skip-link:focus{top:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* GOOGLE CHARTS CONTAINER */
+#voterChart{width:100%;height:220px;margin-bottom:24px}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   .nav-links{display:none}
@@ -269,108 +303,96 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<span aria-live="polite" aria-atomic="true" class="sr-only" id="liveRegion"></span>
 
 <!-- NAV -->
-<nav>
+<nav role="navigation" aria-label="Main navigation" data-testid="main-nav">
   <div class="nav-inner">
-    <div class="nav-logo"><div class="logo-dot"></div>VoteIQ</div>
-    <div class="nav-links">
-      <a class="nav-link" href="#overview">Overview</a>
-      <a class="nav-link" href="#timeline">Timeline</a>
-      <a class="nav-link" href="#india">India Guide</a>
-      <a class="nav-link" href="#voter">Voter Guide</a>
-      <a class="nav-link" href="#types">Types</a>
-      <a class="nav-link" href="#glossary">Glossary</a>
-      <a class="nav-link" href="#faq">FAQ</a>
-      <a class="nav-link" href="#quiz">Quiz <span class="nav-badge">10 Qs</span></a>
-      <a class="nav-link" href="#countdown">Countdown</a>
+    <div class="nav-logo" role="banner" aria-label="VoteIQ Home"><div class="logo-dot" aria-hidden="true"></div>VoteIQ</div>
+    <div class="nav-links" role="menubar" aria-label="Site sections">
+      <a class="nav-link" href="#overview" role="menuitem" data-testid="nav-overview">Overview</a>
+      <a class="nav-link" href="#timeline" role="menuitem" data-testid="nav-timeline">Timeline</a>
+      <a class="nav-link" href="#india" role="menuitem" data-testid="nav-india">India Guide</a>
+      <a class="nav-link" href="#voter" role="menuitem" data-testid="nav-voter">Voter Guide</a>
+      <a class="nav-link" href="#types" role="menuitem" data-testid="nav-types">Types</a>
+      <a class="nav-link" href="#glossary" role="menuitem" data-testid="nav-glossary">Glossary</a>
+      <a class="nav-link" href="#faq" role="menuitem" data-testid="nav-faq">FAQ</a>
+      <a class="nav-link" href="#quiz" role="menuitem" data-testid="nav-quiz">Quiz <span class="nav-badge" aria-label="10 questions">10 Qs</span></a>
+      <a class="nav-link" href="#countdown" role="menuitem" data-testid="nav-countdown">Countdown</a>
     </div>
-    <div class="hamburger" onclick="toggleMobileNav()" id="ham">
-      <span></span><span></span><span></span>
-    </div>
+    <button class="hamburger" onclick="toggleMobileNav()" id="ham" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobileNav" data-testid="hamburger-btn">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
   </div>
 </nav>
-<div class="mobile-nav" id="mobileNav">
-  <a class="nav-link" href="#overview" onclick="closeMobileNav()">Overview</a>
-  <a class="nav-link" href="#timeline" onclick="closeMobileNav()">Timeline</a>
-  <a class="nav-link" href="#india" onclick="closeMobileNav()">India Guide</a>
-  <a class="nav-link" href="#voter" onclick="closeMobileNav()">Voter Guide</a>
-  <a class="nav-link" href="#types" onclick="closeMobileNav()">Types</a>
-  <a class="nav-link" href="#glossary" onclick="closeMobileNav()">Glossary</a>
-  <a class="nav-link" href="#faq" onclick="closeMobileNav()">FAQ</a>
-  <a class="nav-link" href="#quiz" onclick="closeMobileNav()">Quiz</a>
-  <a class="nav-link" href="#countdown" onclick="closeMobileNav()">Countdown</a>
+<div class="mobile-nav" id="mobileNav" role="menu" aria-label="Mobile navigation" aria-hidden="true" data-testid="mobile-nav">
+  <a class="nav-link" href="#overview" role="menuitem" onclick="closeMobileNav()">Overview</a>
+  <a class="nav-link" href="#timeline" role="menuitem" onclick="closeMobileNav()">Timeline</a>
+  <a class="nav-link" href="#india" role="menuitem" onclick="closeMobileNav()">India Guide</a>
+  <a class="nav-link" href="#voter" role="menuitem" onclick="closeMobileNav()">Voter Guide</a>
+  <a class="nav-link" href="#types" role="menuitem" onclick="closeMobileNav()">Types</a>
+  <a class="nav-link" href="#glossary" role="menuitem" onclick="closeMobileNav()">Glossary</a>
+  <a class="nav-link" href="#faq" role="menuitem" onclick="closeMobileNav()">FAQ</a>
+  <a class="nav-link" href="#quiz" role="menuitem" onclick="closeMobileNav()">Quiz</a>
+  <a class="nav-link" href="#countdown" role="menuitem" onclick="closeMobileNav()">Countdown</a>
 </div>
+<main id="main-content" role="main">
 
 <!-- HERO -->
-<section id="hero">
-  <div class="hero-flag"></div>
-  <div class="hero-eyebrow fade-up fade-up-1">
-    <span class="pulse">●</span>
+<section id="hero" aria-labelledby="hero-title" data-testid="hero-section">
+  <div class="hero-flag" aria-hidden="true"></div>
+  <div class="hero-eyebrow fade-up fade-up-1" role="status">
+    <span class="pulse" aria-hidden="true">●</span>
     <span>India Election Education Platform</span>
   </div>
-  <h1 class="hero-title fade-up fade-up-2">
+  <h1 class="hero-title fade-up fade-up-2" id="hero-title">
     Understanding<br><em>Democracy,</em><br>Step by Step.
   </h1>
   <p class="hero-sub fade-up fade-up-3">
     From voter registration to counting day — explore the complete Indian election process with interactive timelines, quizzes, and real-time countdowns.
   </p>
   <div class="hero-btns fade-up fade-up-4">
-    <a href="#overview" class="btn-primary">Explore the Process</a>
-    <a href="#quiz" class="btn-secondary">Take the Quiz</a>
+    <a href="#overview" class="btn-primary" data-testid="hero-cta-explore">Explore the Process</a>
+    <a href="#quiz" class="btn-secondary" data-testid="hero-cta-quiz">Take the Quiz</a>
   </div>
-  <div class="hero-stats fade-up fade-up-4">
-    <div class="hero-stat">
-      <div class="hero-stat-num">969M+</div>
-      <div class="hero-stat-lbl">Registered voters in India (2024)</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">543</div>
-      <div class="hero-stat-lbl">Lok Sabha constituencies</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">18</div>
-      <div class="hero-stat-lbl">Minimum voting age</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">1950</div>
-      <div class="hero-stat-lbl">Voter helpline number</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">Jan 25</div>
-      <div class="hero-stat-lbl">National Voters' Day</div>
-    </div>
+  <div class="hero-stats fade-up fade-up-4" role="list" aria-label="Key election statistics" data-testid="hero-stats">
+    <div class="hero-stat" role="listitem"><div class="hero-stat-num">969M+</div><div class="hero-stat-lbl">Registered voters in India (2024)</div></div>
+    <div class="hero-stat" role="listitem"><div class="hero-stat-num">543</div><div class="hero-stat-lbl">Lok Sabha constituencies</div></div>
+    <div class="hero-stat" role="listitem"><div class="hero-stat-num">18</div><div class="hero-stat-lbl">Minimum voting age</div></div>
+    <div class="hero-stat" role="listitem"><div class="hero-stat-num">1950</div><div class="hero-stat-lbl">Voter helpline number</div></div>
+    <div class="hero-stat" role="listitem"><div class="hero-stat-num">Jan 25</div><div class="hero-stat-lbl">National Voters' Day</div></div>
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="divider" role="separator" aria-hidden="true"></div>
 
 <!-- OVERVIEW -->
-<section id="overview">
-  <div class="section-tag">01 — Overview</div>
-  <h2 class="section-title">Three phases of every election</h2>
+<section id="overview" aria-labelledby="overview-title" data-testid="overview-section">
+  <div class="section-tag" aria-hidden="true">01 — Overview</div>
+  <h2 class="section-title" id="overview-title">Three phases of every election</h2>
   <p class="section-sub">Every election in India follows a structured process managed by the Election Commission of India. Click a phase to learn more.</p>
-  <div class="phases-grid">
-    <div class="phase-card" onclick="selectPhase(this,'pre')">
-      <div class="phase-num">PHASE 01</div>
-      <div class="phase-icon">📋</div>
+  <div class="phases-grid" role="list" aria-label="Election phases">
+    <div class="phase-card" onclick="selectPhase(this,'pre')" role="button" tabindex="0" aria-pressed="false" data-testid="phase-pre" onkeydown="if(event.key==='Enter'||event.key===' ')selectPhase(this,'pre')">
+      <div class="phase-num" aria-hidden="true">PHASE 01</div>
+      <div class="phase-icon" aria-hidden="true">📋</div>
       <h3>Pre-Election</h3>
       <p>Announcement, registration, nominations, campaigns, and Model Code of Conduct enforcement.</p>
     </div>
-    <div class="phase-card" onclick="selectPhase(this,'day')">
-      <div class="phase-num">PHASE 02</div>
-      <div class="phase-icon">🗳️</div>
+    <div class="phase-card" onclick="selectPhase(this,'day')" role="button" tabindex="0" aria-pressed="false" data-testid="phase-day" onkeydown="if(event.key==='Enter'||event.key===' ')selectPhase(this,'day')">
+      <div class="phase-num" aria-hidden="true">PHASE 02</div>
+      <div class="phase-icon" aria-hidden="true">🗳️</div>
       <h3>Election Day</h3>
       <p>Polling stations open, voters cast ballots on EVMs with VVPAT verification, booths are sealed.</p>
     </div>
-    <div class="phase-card" onclick="selectPhase(this,'post')">
-      <div class="phase-num">PHASE 03</div>
-      <div class="phase-icon">📊</div>
+    <div class="phase-card" onclick="selectPhase(this,'post')" role="button" tabindex="0" aria-pressed="false" data-testid="phase-post" onkeydown="if(event.key==='Enter'||event.key===' ')selectPhase(this,'post')">
+      <div class="phase-num" aria-hidden="true">PHASE 03</div>
+      <div class="phase-icon" aria-hidden="true">📊</div>
       <h3>Post-Election</h3>
       <p>Counting of EVM votes, results declaration, certification, and transition of power.</p>
     </div>
   </div>
-  <div class="phase-detail" id="phase-detail">
+  <div class="phase-detail" id="phase-detail" aria-live="polite" aria-atomic="true" data-testid="phase-detail">
     <p style="color:var(--text3);font-size:14px">↑ Select a phase above to see detailed information.</p>
   </div>
 </section>
@@ -378,11 +400,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
 <div class="divider"></div>
 
 <!-- TIMELINE -->
-<section id="timeline">
-  <div class="section-tag">02 — Timeline</div>
-  <h2 class="section-title">Election timeline, step by step</h2>
+<section id="timeline" aria-labelledby="timeline-title" data-testid="timeline-section">
+  <div class="section-tag" aria-hidden="true">02 — Timeline</div>
+  <h2 class="section-title" id="timeline-title">Election timeline, step by step</h2>
   <p class="section-sub">Click each step to expand the full details. Track your progress below.</p>
-  <div class="tl-progress">
+  <div class="tl-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Timeline exploration progress">
     <div class="tl-prog-lbl" id="tl-lbl">0 of 8 steps explored</div>
     <div class="tl-prog-bar"><div class="tl-prog-fill" id="tl-fill" style="width:0%"></div></div>
   </div>
@@ -434,10 +456,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
 <div class="divider"></div>
 
 <!-- INDIA GUIDE -->
-<section id="india">
-  <div class="section-tag">03 — India Guide</div>
-  <h2 class="section-title">India's election system</h2>
+<section id="india" aria-labelledby="india-title" data-testid="india-section">
+  <div class="section-tag" aria-hidden="true">03 — India Guide</div>
+  <h2 class="section-title" id="india-title">India's election system</h2>
   <p class="section-sub">Key facts, rules, and links specific to how India conducts its elections under the Election Commission.</p>
+  <!-- Google Chart: Voter Turnout -->
+  <div id="voterChart" role="img" aria-label="Bar chart showing historical Lok Sabha voter turnout from 2004 to 2024" data-testid="voter-chart"></div>
   <div class="india-stats">
     <div class="india-stat-card">
       <div class="isc-badge">Lok Sabha</div>
@@ -621,13 +645,13 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
 <div class="divider"></div>
 
 <!-- FAQ -->
-<section id="faq">
-  <div class="section-tag">07 — FAQ</div>
-  <h2 class="section-title">Frequently asked questions</h2>
+<section id="faq" aria-labelledby="faq-title" data-testid="faq-section">
+  <div class="section-tag" aria-hidden="true">07 — FAQ</div>
+  <h2 class="section-title" id="faq-title">Frequently asked questions</h2>
   <p class="section-sub">Answers to the most common questions about voting in India.</p>
-  <div class="faq-list">
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFAQ(this)">Who is eligible to vote in India? <span class="faq-icon">+</span></div>
+  <div class="faq-list" role="list" data-testid="faq-list">
+    <div class="faq-item" role="listitem">
+      <div class="faq-q" onclick="toggleFAQ(this)" role="button" tabindex="0" aria-expanded="false" data-testid="faq-q-0" onkeydown="if(event.key==='Enter')toggleFAQ(this)">Who is eligible to vote in India? <span class="faq-icon" aria-hidden="true">+</span></div>
       <div class="faq-a"><div class="faq-text">Any Indian citizen aged 18 or above who is registered in the electoral roll of their constituency. NRIs holding Indian passports can register and must vote in person at their home constituency (postal/proxy voting not available for NRIs). People declared of unsound mind by a court, and those imprisoned and serving a sentence are excluded.</div></div>
     </div>
     <div class="faq-item">
@@ -660,9 +684,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
 <div class="divider"></div>
 
 <!-- QUIZ -->
-<section id="quiz">
-  <div class="section-tag">08 — Quiz</div>
-  <h2 class="section-title">Test your knowledge</h2>
+<section id="quiz" aria-labelledby="quiz-title" data-testid="quiz-section">
+  <div class="section-tag" aria-hidden="true">08 — Quiz</div>
+  <h2 class="section-title" id="quiz-title">Test your knowledge</h2>
   <p class="section-sub">10 questions on the Indian election process. Click an option to answer.</p>
   <div class="quiz-wrap">
     <div class="quiz-score-card" id="quizScoreCard">
@@ -686,9 +710,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
 <div class="divider"></div>
 
 <!-- COUNTDOWN -->
-<section id="countdown">
-  <div class="section-tag">09 — Countdown</div>
-  <h2 class="section-title">Election countdown timer</h2>
+<section id="countdown" aria-labelledby="countdown-title" data-testid="countdown-section">
+  <div class="section-tag" aria-hidden="true">09 — Countdown</div>
+  <h2 class="section-title" id="countdown-title">Election countdown timer</h2>
   <p class="section-sub">Add any upcoming election and track the time remaining in real time.</p>
 
   <div class="cd-active" id="cdDisplay">
@@ -716,8 +740,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
     </div>
   </div>
 
-  <div class="saved-list" id="savedList"></div>
+  <div class="saved-list" id="savedList" role="list" aria-label="Saved election countdowns"></div>
 </section>
+</main>
 
 <div class="divider"></div>
 
@@ -732,160 +757,348 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
 </footer>
 
 <script>
+/** @fileoverview VoteIQ — India Election Process Guide interactive scripts */
+
+// ── CONSTANTS ──
+const TOTAL_TL_STEPS = 8;
+const TOTAL_CHECKLIST = 7;
+const TOTAL_QUIZ_Q = 10;
+
+// ── GOOGLE CHARTS ──
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawVoterChart);
+
+/** Renders Lok Sabha voter turnout bar chart in the India Guide section */
+function drawVoterChart() {
+  try {
+    const data = google.visualization.arrayToDataTable([
+      ['Election Year', 'Voter Turnout (%)', {role:'style'}],
+      ['2004', 58.1, 'color: #F59E0B'],
+      ['2009', 58.2, 'color: #F59E0B'],
+      ['2014', 66.4, 'color: #10B981'],
+      ['2019', 67.4, 'color: #10B981'],
+      ['2024', 65.8, 'color: #3B82F6'],
+    ]);
+    const options = {
+      title: 'Lok Sabha Voter Turnout (%) — 2004 to 2024',
+      titleTextStyle: {color:'#EEF2FF', fontSize:14, fontName:'DM Sans'},
+      backgroundColor: '#0E1525',
+      chartArea: {backgroundColor:'#0E1525', width:'80%', height:'70%'},
+      hAxis: {textStyle:{color:'#8B9DC3'}, gridlines:{color:'#1C2B40'}},
+      vAxis: {textStyle:{color:'#8B9DC3'}, gridlines:{color:'#1C2B40'}, minValue:50, maxValue:75},
+      legend: {position:'none'},
+      bar: {groupWidth:'55%'},
+      animation: {startup:true, duration:800, easing:'out'},
+    };
+    const chart = new google.visualization.ColumnChart(document.getElementById('voterChart'));
+    chart.draw(data, options);
+  } catch(e) { console.warn('Chart render error:', e); }
+}
+
 // ── NAV ──
-function toggleMobileNav(){document.getElementById('mobileNav').classList.toggle('open')}
-function closeMobileNav(){document.getElementById('mobileNav').classList.remove('open')}
-window.addEventListener('scroll',()=>{
-  const sections=['overview','timeline','india','voter','types','glossary','faq','quiz','countdown'];
-  let cur='';
-  sections.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<=80)cur=id;});
-  document.querySelectorAll('.nav-link').forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+cur)});
+/** Toggles the mobile navigation menu */
+function toggleMobileNav() {
+  const nav = document.getElementById('mobileNav');
+  const ham = document.getElementById('ham');
+  const isOpen = nav.classList.toggle('open');
+  ham.setAttribute('aria-expanded', String(isOpen));
+  nav.setAttribute('aria-hidden', String(!isOpen));
+  trackEvent('nav_toggle', {action: isOpen ? 'open' : 'close'});
+}
+
+/** Closes the mobile navigation menu */
+function closeMobileNav() {
+  const nav = document.getElementById('mobileNav');
+  nav.classList.remove('open');
+  document.getElementById('ham').setAttribute('aria-expanded', 'false');
+  nav.setAttribute('aria-hidden', 'true');
+}
+
+window.addEventListener('scroll', () => {
+  const sections = ['overview','timeline','india','voter','types','glossary','faq','quiz','countdown'];
+  let cur = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 80) cur = id;
+  });
+  document.querySelectorAll('.nav-link').forEach(l => {
+    const active = l.getAttribute('href') === '#' + cur;
+    l.classList.toggle('active', active);
+    if (active) l.setAttribute('aria-current', 'page');
+    else l.removeAttribute('aria-current');
+  });
 });
 
 // ── PHASES ──
-const phases={
+/** @type {Object.<string,{tag:string,title:string,body:string}>} */
+const phases = {
   pre:{tag:'Phase 01 — Pre-Election',title:'Pre-election phase',body:'This is the longest phase. It begins the moment the Election Commission announces the schedule and ends the day before polling. It covers voter registration, candidate nominations, scrutiny and withdrawal, the full campaign period, and enforcement of the Model Code of Conduct. The ECI sets up polling infrastructure, trains staff, and deploys election observers across constituencies.'},
   day:{tag:'Phase 02 — Election Day',title:'Election day / polling',body:'Polling stations open at 7 AM and close at 6 PM (voters already in queue at 6 PM can still vote). Voters present ID, are verified against the electoral roll, and cast their vote on the EVM. A VVPAT slip confirms the choice. Security forces maintain order. In India, elections are often conducted in multiple phases across different states over several weeks to manage logistics and security.'},
   post:{tag:'Phase 03 — Post-Election',title:'Post-election phase',body:'Once all phases conclude, EVMs are opened at counting centres on the designated counting day. Results are declared constituency by constituency. The ECI certifies final results. The President invites the majority party or coalition to form the government. The PM and Cabinet are sworn in. The outgoing government functions as caretaker until the new government takes charge.'}
 };
-function selectPhase(el,key){
-  document.querySelectorAll('.phase-card').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  const d=phases[key];
-  document.getElementById('phase-detail').innerHTML=`<div class="phase-detail-tag">${d.tag}</div><h3>${d.title}</h3><p style="margin-top:8px;font-size:14px;color:var(--text2);line-height:1.7">${d.body}</p>`;
+
+/**
+ * Selects and displays a phase detail card.
+ * @param {HTMLElement} el - The clicked phase card
+ * @param {string} key - Phase key: 'pre' | 'day' | 'post'
+ */
+function selectPhase(el, key) {
+  try {
+    document.querySelectorAll('.phase-card').forEach(c => {
+      c.classList.remove('active');
+      c.setAttribute('aria-pressed', 'false');
+    });
+    el.classList.add('active');
+    el.setAttribute('aria-pressed', 'true');
+    const d = phases[key];
+    if (!d) throw new Error('Unknown phase: ' + key);
+    document.getElementById('phase-detail').innerHTML =
+      `<div class="phase-detail-tag">${d.tag}</div><h3>${d.title}</h3><p style="margin-top:8px;font-size:14px;color:var(--text2);line-height:1.7">${d.body}</p>`;
+    trackEvent('phase_selected', {phase: key});
+  } catch(e) { console.warn('selectPhase error:', e); }
 }
 
 // ── TIMELINE ──
-const tlSeen=new Set();
-function toggleTL(el,idx){
-  const isOpen=el.classList.contains('open');
-  el.classList.toggle('open',!isOpen);
-  if(!isOpen)tlSeen.add(idx);
-  const fill=Math.round((tlSeen.size/8)*100);
-  document.getElementById('tl-fill').style.width=fill+'%';
-  document.getElementById('tl-lbl').textContent=tlSeen.size+' of 8 steps explored';
-  if(tlSeen.size===8)document.querySelectorAll('.tl-item').forEach(i=>i.classList.add('done'));
+const tlSeen = new Set();
+
+/**
+ * Toggles a timeline item open/closed.
+ * @param {HTMLElement} el - The timeline item element
+ * @param {number} idx - Step index (0-based)
+ */
+function toggleTL(el, idx) {
+  const isOpen = el.classList.contains('open');
+  el.classList.toggle('open', !isOpen);
+  const header = el.querySelector('.tl-header');
+  if (header) header.setAttribute('aria-expanded', String(!isOpen));
+  if (!isOpen) tlSeen.add(idx);
+  const fill = Math.round((tlSeen.size / TOTAL_TL_STEPS) * 100);
+  document.getElementById('tl-fill').style.width = fill + '%';
+  document.getElementById('tl-lbl').textContent = tlSeen.size + ' of ' + TOTAL_TL_STEPS + ' steps explored';
+  const bar = document.querySelector('.tl-progress');
+  if (bar) bar.setAttribute('aria-valuenow', fill);
+  if (tlSeen.size === TOTAL_TL_STEPS) {
+    document.querySelectorAll('.tl-item').forEach(i => i.classList.add('done'));
+    announce('All timeline steps explored!');
+  }
+  trackEvent('timeline_step', {step: idx + 1, action: !isOpen ? 'open' : 'close'});
 }
 
 // ── CHECKLIST ──
-function toggleCheck(el){
+/**
+ * Toggles a voter checklist item checked state.
+ * @param {HTMLElement} el - The check item element
+ */
+function toggleCheck(el) {
   el.classList.toggle('checked');
-  el.querySelector('.check-box').textContent=el.classList.contains('checked')?'✓':'';
-  const items=document.querySelectorAll('.check-item');
-  const done=document.querySelectorAll('.check-item.checked').length;
-  document.getElementById('vc-fill').style.width=Math.round((done/items.length)*100)+'%';
-  document.getElementById('vc-lbl').textContent=done+' of '+items.length+' steps complete';
+  const isChecked = el.classList.contains('checked');
+  el.querySelector('.check-box').textContent = isChecked ? '✓' : '';
+  el.setAttribute('aria-checked', String(isChecked));
+  const items = document.querySelectorAll('.check-item');
+  const done = document.querySelectorAll('.check-item.checked').length;
+  document.getElementById('vc-fill').style.width = Math.round((done / items.length) * 100) + '%';
+  document.getElementById('vc-lbl').textContent = done + ' of ' + items.length + ' steps complete';
+  if (done === items.length) announce('All voter checklist steps complete! You are election-ready.');
+  trackEvent('checklist_item', {checked: isChecked, progress: done});
 }
 
 // ── FAQ ──
-function toggleFAQ(el){
-  const item=el.parentElement;
-  item.classList.toggle('open');
+/**
+ * Toggles a FAQ item open/closed.
+ * @param {HTMLElement} el - The FAQ question element
+ */
+function toggleFAQ(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.toggle('open');
+  el.setAttribute('aria-expanded', String(isOpen));
   item.querySelector('.faq-a').classList.toggle('open');
+  trackEvent('faq_toggle', {question: el.textContent.trim().substring(0, 40), open: isOpen});
+}
+
+// ── LIVE REGION ANNOUNCE ──
+/**
+ * Announces a message to screen readers via the live region.
+ * @param {string} msg
+ */
+function announce(msg) {
+  const r = document.getElementById('liveRegion');
+  if (r) { r.textContent = ''; setTimeout(() => { r.textContent = msg; }, 50); }
 }
 
 // ── QUIZ ──
-const questions=[
+/** @type {Array<{q:string,opts:string[],ans:number,exp:string}>} */
+const questions = [
   {q:'What is the minimum voting age in India?',opts:['16 years','18 years','21 years','25 years'],ans:1,exp:'The 61st Constitutional Amendment (1988) lowered the voting age from 21 to 18, effective from the 1989 general elections.'},
   {q:'How many seats are there in the Lok Sabha?',opts:['545','543','550','520'],ans:1,exp:'The Lok Sabha has 543 elected seats from 543 constituencies. Two additional seats for Anglo-Indians were abolished by the 104th Amendment in 2020.'},
-  {q:'Which body conducts elections in India?',opts:['UPSC','ECI','Planning Commission','Law Ministry'],ans:1,exp:'The Election Commission of India (ECI) is an autonomous constitutional body established under Article 324. It supervises, directs, and controls all elections to Parliament, State Legislatures, and offices of President and Vice-President.'},
-  {q:'What does EVM stand for?',opts:['Electronic Voting Machine','Electoral Verification Method','Electronic Vote Monitor','Elector Verification Machine'],ans:0,exp:'EVM stands for Electronic Voting Machine. India started using EVMs in by-elections from 1982 and universally in general elections from 2004.'},
-  {q:'What is NOTA?',opts:['National Official Tally Agreement','None of the Above','National Online Token Authentication','None of the Allotted'],ans:1,exp:'NOTA (None of the Above) allows voters to formally reject all candidates on the ballot. It was introduced by the Supreme Court in 2013 and appears as the last option on every EVM.'},
-  {q:'What is the security deposit for a Lok Sabha candidate (General category)?',opts:['₹10,000','₹12,500','₹25,000','₹50,000'],ans:2,exp:'General category candidates must pay ₹25,000 as a security deposit when filing Lok Sabha nominations. SC/ST candidates pay ₹12,500. The deposit is forfeited if the candidate gets less than 1/6th of total valid votes.'},
-  {q:'What is the campaign silence period before polling?',opts:['24 hours','48 hours','72 hours','No restriction'],ans:1,exp:'The Model Code of Conduct mandates a 48-hour campaign silence period before the close of polling. During this window, no campaign activities, rallies, or political advertisements are permitted.'},
-  {q:'Which form is used for new voter registration in India?',opts:['Form 4','Form 6','Form 8','Form 9'],ans:1,exp:'Form 6 is used by new applicants to register as a voter in any constituency. Form 7 is for deletion/objection, Form 8 is for correction of details, and Form 8A is for shifting within the same constituency.'},
-  {q:'What does VVPAT stand for?',opts:['Voter Verified Paper Audit Trail','Voter Verifiable Paper Audit Trail','Verified Vote Paper Audit Track','Voter Verified Poll Audit Trail'],ans:1,exp:'VVPAT (Voter Verifiable Paper Audit Trail) is a mechanism attached to the EVM that prints a paper slip showing the voter\'s chosen candidate. The slip is visible for 7 seconds before dropping into a sealed compartment.'},
-  {q:'When is National Voters\' Day celebrated in India?',opts:['November 26','January 25','August 15','April 1'],ans:1,exp:'National Voters\' Day is celebrated on January 25 every year — the founding anniversary of the Election Commission of India (1950). It has been observed since 2011 to encourage voter registration and participation among youth.'}
+  {q:'Which body conducts elections in India?',opts:['UPSC','ECI','Planning Commission','Law Ministry'],ans:1,exp:'The Election Commission of India (ECI) is an autonomous constitutional body established under Article 324.'},
+  {q:'What does EVM stand for?',opts:['Electronic Voting Machine','Electoral Verification Method','Electronic Vote Monitor','Elector Verification Machine'],ans:0,exp:'EVM stands for Electronic Voting Machine. India started using EVMs universally in general elections from 2004.'},
+  {q:'What is NOTA?',opts:['National Official Tally Agreement','None of the Above','National Online Token Authentication','None of the Allotted'],ans:1,exp:'NOTA (None of the Above) allows voters to formally reject all candidates. Introduced by the Supreme Court in 2013.'},
+  {q:'What is the security deposit for a Lok Sabha candidate (General)?',opts:['\u20b910,000','\u20b912,500','\u20b925,000','\u20b950,000'],ans:2,exp:'General category candidates must pay \u20b925,000. SC/ST candidates pay \u20b912,500. Forfeited if less than 1/6th of total votes.'},
+  {q:'What is the campaign silence period before polling?',opts:['24 hours','48 hours','72 hours','No restriction'],ans:1,exp:'The Model Code of Conduct mandates a 48-hour campaign silence period before the close of polling.'},
+  {q:'Which form is used for new voter registration in India?',opts:['Form 4','Form 6','Form 8','Form 9'],ans:1,exp:'Form 6 is used by new applicants. Form 7 for deletion, Form 8 for corrections, Form 8A for shifting within constituency.'},
+  {q:'What does VVPAT stand for?',opts:['Voter Verified Paper Audit Trail','Voter Verifiable Paper Audit Trail','Verified Vote Paper Audit Track','Voter Verified Poll Audit Trail'],ans:1,exp:'VVPAT (Voter Verifiable Paper Audit Trail) prints a slip visible for 7 seconds confirming the voter\'s choice.'},
+  {q:'When is National Voters\' Day celebrated in India?',opts:['November 26','January 25','August 15','April 1'],ans:1,exp:'January 25 — the founding anniversary of ECI (1950). Observed since 2011 to encourage youth participation.'}
 ];
-let qIdx=0,score=0,answered=false;
-function renderQuestion(){
-  const q=questions[qIdx];
-  document.getElementById('quizCounter').textContent=(qIdx+1)+' / '+questions.length;
-  document.getElementById('quizFill').style.width=((qIdx+1)/questions.length*100)+'%';
-  document.getElementById('quizCard').innerHTML=`<div class="quiz-q-num">Question ${qIdx+1} of ${questions.length}</div><div class="quiz-q-text">${q.q}</div><div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answerQ(this,${i})">${o}</button>`).join('')}</div><div class="quiz-exp" id="qExp">${q.exp}</div>`;
-  document.getElementById('quizNextBtn').style.display='none';
-  answered=false;
+
+let qIdx = 0, score = 0, answered = false;
+
+/** Renders the current quiz question */
+function renderQuestion() {
+  try {
+    const q = questions[qIdx];
+    document.getElementById('quizCounter').textContent = (qIdx + 1) + ' / ' + questions.length;
+    document.getElementById('quizFill').style.width = ((qIdx + 1) / questions.length * 100) + '%';
+    document.getElementById('quizCard').innerHTML =
+      `<div class="quiz-q-num">Question ${qIdx+1} of ${questions.length}</div>
+       <div class="quiz-q-text" id="quizQuestion">${q.q}</div>
+       <div class="quiz-opts" role="group" aria-labelledby="quizQuestion">${q.opts.map((o,i) =>
+         `<button class="quiz-opt" onclick="answerQ(this,${i})" data-testid="quiz-opt-${i}">${o}</button>`).join('')}
+       </div>
+       <div class="quiz-exp" id="qExp" role="alert" aria-live="assertive">${q.exp}</div>`;
+    document.getElementById('quizNextBtn').style.display = 'none';
+    answered = false;
+  } catch(e) { console.warn('renderQuestion error:', e); }
 }
-function answerQ(btn,idx){
-  if(answered)return;
-  answered=true;
-  const q=questions[qIdx];
-  const opts=document.querySelectorAll('.quiz-opt');
-  opts.forEach(o=>o.disabled=true);
-  if(idx===q.ans){btn.classList.add('correct');score++;}
-  else{btn.classList.add('wrong');opts[q.ans].classList.add('reveal');}
-  document.getElementById('qExp').style.display='block';
-  document.getElementById('quizNextBtn').style.display='block';
-  document.getElementById('quizNextBtn').textContent=qIdx===questions.length-1?'See results →':'Next question →';
+
+/**
+ * Handles a quiz answer selection.
+ * @param {HTMLButtonElement} btn
+ * @param {number} idx
+ */
+function answerQ(btn, idx) {
+  if (answered) return;
+  answered = true;
+  const q = questions[qIdx];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.disabled = true);
+  if (idx === q.ans) { btn.classList.add('correct'); score++; announce('Correct!'); }
+  else { btn.classList.add('wrong'); opts[q.ans].classList.add('reveal'); announce('Incorrect. ' + q.exp); }
+  document.getElementById('qExp').style.display = 'block';
+  const nb = document.getElementById('quizNextBtn');
+  nb.style.display = 'block';
+  nb.textContent = qIdx === questions.length - 1 ? 'See results \u2192' : 'Next question \u2192';
+  trackEvent('quiz_answer', {question: qIdx + 1, correct: idx === q.ans});
 }
-function nextQuestion(){
+
+/** Advances to the next quiz question or shows score */
+function nextQuestion() {
   qIdx++;
-  if(qIdx>=questions.length){showScore();return;}
+  if (qIdx >= questions.length) { showScore(); return; }
   renderQuestion();
 }
-function showScore(){
-  document.getElementById('quizMain').style.display='none';
-  const sc=document.getElementById('quizScoreCard');
-  sc.style.display='block';
-  document.getElementById('quizScoreNum').textContent=score+'/'+questions.length;
-  const msgs=['Keep studying! Review the guide above.','Getting there! Read the India Guide section.','Good effort! A few more reads and you\'ll nail it.','Well done! You know your Indian elections.','Excellent! You\'re election-ready.','Perfect score! You could run for office.'];
-  const idx=Math.min(Math.floor(score/2),5);
-  document.getElementById('quizScoreMsg').textContent=msgs[idx];
+
+/** Shows the final quiz score card */
+function showScore() {
+  document.getElementById('quizMain').style.display = 'none';
+  const sc = document.getElementById('quizScoreCard');
+  sc.style.display = 'block';
+  document.getElementById('quizScoreNum').textContent = score + '/' + questions.length;
+  const msgs = ['Keep studying! Review the guide above.','Getting there! Read the India Guide section.','Good effort! A few more reads and you\'ll nail it.','Well done! You know your Indian elections.','Excellent! You\'re election-ready.','Perfect score! You could run for office.'];
+  document.getElementById('quizScoreMsg').textContent = msgs[Math.min(Math.floor(score / 2), 5)];
+  announce('Quiz complete! Your score: ' + score + ' out of ' + questions.length);
+  trackEvent('quiz_complete', {score, total: questions.length});
 }
-function resetQuiz(){
-  qIdx=0;score=0;answered=false;
-  document.getElementById('quizScoreCard').style.display='none';
-  document.getElementById('quizMain').style.display='block';
+
+/** Resets the quiz to the beginning */
+function resetQuiz() {
+  qIdx = 0; score = 0; answered = false;
+  document.getElementById('quizScoreCard').style.display = 'none';
+  document.getElementById('quizMain').style.display = 'block';
   renderQuestion();
+  trackEvent('quiz_restart', {});
 }
 renderQuestion();
 
 // ── COUNTDOWN ──
-let countdowns=[];
-let activeIdx=-1;
-let cdInterval=null;
-function addPreset(name,date){document.getElementById('cdElectionName').value=name;document.getElementById('cdDate').value=date;addCountdown();}
-function addCountdown(){
-  const name=document.getElementById('cdElectionName').value.trim();
-  const date=document.getElementById('cdDate').value;
-  if(!name||!date)return;
-  countdowns.push({name,date});
-  document.getElementById('cdElectionName').value='';
-  document.getElementById('cdDate').value='';
+/** @type {Array<{name:string,date:string}>} */
+let countdowns = [];
+let activeIdx = -1;
+let cdInterval = null;
+
+/**
+ * Adds a preset election countdown.
+ * @param {string} name
+ * @param {string} date
+ */
+function addPreset(name, date) {
+  document.getElementById('cdElectionName').value = name;
+  document.getElementById('cdDate').value = date;
+  addCountdown();
+}
+
+/** Adds a new countdown from form inputs */
+function addCountdown() {
+  const name = document.getElementById('cdElectionName').value.trim();
+  const date = document.getElementById('cdDate').value;
+  if (!name || !date) { announce('Please enter both election name and date.'); return; }
+  countdowns.push({name, date});
+  document.getElementById('cdElectionName').value = '';
+  document.getElementById('cdDate').value = '';
   renderSaved();
-  setActive(countdowns.length-1);
+  setActive(countdowns.length - 1);
+  trackEvent('countdown_add', {name});
 }
-function renderSaved(){
-  const list=document.getElementById('savedList');
-  list.innerHTML=countdowns.map((c,i)=>`<div class="saved-item${activeIdx===i?' active-item':''}" onclick="setActive(${i})"><span class="saved-name">${c.name}</span><span class="saved-date">${new Date(c.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</span><button class="saved-del" onclick="event.stopPropagation();deleteCd(${i})">Remove</button></div>`).join('');
+
+/** Renders the saved countdowns list */
+function renderSaved() {
+  const list = document.getElementById('savedList');
+  list.innerHTML = countdowns.map((c, i) =>
+    `<div class="saved-item${activeIdx===i?' active-item':''}" onclick="setActive(${i})" role="listitem" aria-label="${c.name}" data-testid="saved-item-${i}">
+      <span class="saved-name">${c.name}</span>
+      <span class="saved-date">${new Date(c.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</span>
+      <button class="saved-del" onclick="event.stopPropagation();deleteCd(${i})" aria-label="Remove ${c.name}">Remove</button>
+    </div>`).join('');
 }
-function deleteCd(i){countdowns.splice(i,1);if(activeIdx>=countdowns.length)activeIdx=countdowns.length-1;renderSaved();if(activeIdx>=0)setActive(activeIdx);else{clearInterval(cdInterval);document.getElementById('cdDisplay').classList.remove('visible');}}
-function setActive(i){
-  activeIdx=i;
+
+/**
+ * Deletes a countdown entry.
+ * @param {number} i
+ */
+function deleteCd(i) {
+  countdowns.splice(i, 1);
+  if (activeIdx >= countdowns.length) activeIdx = countdowns.length - 1;
+  renderSaved();
+  if (activeIdx >= 0) setActive(activeIdx);
+  else { clearInterval(cdInterval); document.getElementById('cdDisplay').classList.remove('visible'); }
+}
+
+/**
+ * Sets the active countdown and starts the timer.
+ * @param {number} i
+ */
+function setActive(i) {
+  activeIdx = i;
   renderSaved();
   clearInterval(cdInterval);
-  const target=new Date(countdowns[i].date+'T00:00:00');
-  document.getElementById('cdName').textContent=countdowns[i].name;
+  const target = new Date(countdowns[i].date + 'T00:00:00');
+  document.getElementById('cdName').textContent = countdowns[i].name;
   document.getElementById('cdDisplay').classList.add('visible');
-  function tick(){
-    const now=new Date();
-    const diff=target-now;
-    if(diff<=0){document.getElementById('cdGrid').innerHTML='<div class="cd-expired">This election date has passed.</div>';return;}
-    const d=Math.floor(diff/86400000);
-    const h=Math.floor((diff%86400000)/3600000);
-    const m=Math.floor((diff%3600000)/60000);
-    const s=Math.floor((diff%60000)/1000);
-    document.getElementById('cdDays').textContent=String(d).padStart(2,'0');
-    document.getElementById('cdHours').textContent=String(h).padStart(2,'0');
-    document.getElementById('cdMins').textContent=String(m).padStart(2,'0');
-    document.getElementById('cdSecs').textContent=String(s).padStart(2,'0');
-    document.getElementById('cdDateLbl').textContent='Target: '+target.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-    document.getElementById('cdGrid').innerHTML=`<div class="cd-unit"><div class="cd-num">${String(d).padStart(2,'0')}</div><div class="cd-lbl">Days</div></div><div class="cd-unit"><div class="cd-num">${String(h).padStart(2,'0')}</div><div class="cd-lbl">Hours</div></div><div class="cd-unit"><div class="cd-num">${String(m).padStart(2,'0')}</div><div class="cd-lbl">Minutes</div></div><div class="cd-unit"><div class="cd-num">${String(s).padStart(2,'0')}</div><div class="cd-lbl">Seconds</div></div>`;
+  function tick() {
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('cdGrid').innerHTML = '<div class="cd-expired">This election date has passed.</div>';
+      clearInterval(cdInterval);
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('cdGrid').innerHTML =
+      `<div class="cd-unit"><div class="cd-num">${pad(d)}</div><div class="cd-lbl">Days</div></div>
+       <div class="cd-unit"><div class="cd-num">${pad(h)}</div><div class="cd-lbl">Hours</div></div>
+       <div class="cd-unit"><div class="cd-num">${pad(m)}</div><div class="cd-lbl">Minutes</div></div>
+       <div class="cd-unit"><div class="cd-num">${pad(s)}</div><div class="cd-lbl">Seconds</div></div>`;
+    document.getElementById('cdDateLbl').textContent = 'Target: ' + target.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   }
-  tick();cdInterval=setInterval(tick,1000);
+  tick();
+  cdInterval = setInterval(tick, 1000);
 }
+
 // Load default preset
-addPreset('Bihar Assembly Election 2025','2025-10-15');
+addPreset('Bihar Assembly Election 2025', '2025-10-15');
 </script>
 </body>
 </html>
