@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoteIQ — India Election Process Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080D1A;
+  --bg2: #0E1525;
+  --bg3: #152033;
+  --surface: #1C2B40;
+  --surface2: #243448;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --accent: #F59E0B;
+  --accent-dim: rgba(245,158,11,0.15);
+  --accent-green: #10B981;
+  --accent-blue: #3B82F6;
+  --text: #EEF2FF;
+  --text2: #8B9DC3;
+  --text3: #5A6E8C;
+  --red: #EF4444;
+  --teal: #06B6D4;
+  --purple: #8B5CF6;
+  --saffron: #FF9933;
+  --india-green: #138808;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:2px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,13,26,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;background:var(--accent);border-radius:50%}
+.nav-links{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.nav-link{font-size:12px;font-weight:500;color:var(--text2);padding:6px 12px;border-radius:6px;cursor:pointer;transition:all .2s;text-decoration:none;border:none;background:none}
+.nav-link:hover,.nav-link.active{color:var(--text);background:var(--surface)}
+.nav-badge{background:var(--accent);color:#000;font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;margin-left:4px}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px}
+.hamburger span{width:20px;height:2px;background:var(--text2);border-radius:1px;transition:all .3s}
+.mobile-nav{display:none;position:fixed;top:60px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:12px;z-index:99;flex-direction:column;gap:4px}
+.mobile-nav.open{display:flex}
+
+/* SECTIONS */
+section{padding:80px 24px;max-width:1200px;margin:0 auto}
+.section-tag{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,44px);font-weight:700;line-height:1.2;margin-bottom:16px}
+.section-sub{font-size:15px;color:var(--text2);line-height:1.7;max-width:600px;margin-bottom:40px}
+
+/* HERO */
+#hero{padding:140px 24px 80px;max-width:1200px;margin:0 auto;position:relative}
+.hero-flag{position:absolute;top:100px;right:0;width:3px;height:200px;background:linear-gradient(to bottom,var(--saffron),var(--saffron) 33.3%,#fff 33.3%,#fff 66.6%,var(--india-green) 66.6%);border-radius:2px;opacity:0.3}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--accent-dim);border:1px solid rgba(245,158,11,0.3);border-radius:20px;padding:6px 14px;margin-bottom:24px}
+.hero-eyebrow span{font-size:12px;font-weight:500;color:var(--accent)}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,72px);font-weight:900;line-height:1.1;margin-bottom:24px}
+.hero-title em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:16px;color:var(--text2);line-height:1.7;max-width:520px;margin-bottom:40px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#000;font-size:14px;font-weight:600;padding:12px 24px;border-radius:8px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none;display:inline-block}
+.btn-primary:hover{background:#D97706;transform:translateY(-1px)}
+.btn-secondary{background:transparent;color:var(--text);font-size:14px;font-weight:500;padding:12px 24px;border-radius:8px;cursor:pointer;border:1px solid var(--border2);font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none;display:inline-block}
+.btn-secondary:hover{background:var(--surface);border-color:var(--border2)}
+.hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:60px}
+.hero-stat{background:var(--bg2);padding:20px;text-align:center}
+.hero-stat-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--accent)}
+.hero-stat-lbl{font-size:11px;color:var(--text3);margin-top:4px;line-height:1.4}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);max-width:1200px;margin:0 auto}
+
+/* PHASES */
+.phases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:32px}
+.phase-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.phase-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.phase-card:hover,.phase-card.active{border-color:var(--border2);transform:translateY(-2px)}
+.phase-card.active::before,.phase-card:hover::before{transform:scaleX(1)}
+.phase-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);margin-bottom:12px}
+.phase-icon{font-size:28px;margin-bottom:12px}
+.phase-card h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;margin-bottom:8px}
+.phase-card p{font-size:13px;color:var(--text2);line-height:1.6}
+.phase-detail{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;min-height:100px;transition:all .3s}
+.phase-detail-tag{font-size:11px;font-weight:600;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.phase-detail h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;margin-bottom:10px}
+.phase-detail p{font-size:14px;color:var(--text2);line-height:1.7}
+
+/* TIMELINE */
+.timeline-wrap{position:relative;padding-left:40px}
+.timeline-line{position:absolute;left:15px;top:0;bottom:0;width:1px;background:var(--border2)}
+.tl-item{position:relative;margin-bottom:8px}
+.tl-header{display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:all .2s}
+.tl-header:hover{border-color:var(--border2);background:var(--surface)}
+.tl-dot{position:absolute;left:-33px;top:19px;width:16px;height:16px;border-radius:50%;background:var(--surface2);border:2px solid var(--border2);z-index:1;transition:all .3s}
+.tl-item.open .tl-dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-dim)}
+.tl-item.done .tl-dot{background:var(--accent-green);border-color:var(--accent-green)}
+.tl-step{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);min-width:40px}
+.tl-title{font-size:14px;font-weight:600;flex:1}
+.tl-time{font-size:11px;color:var(--text3);white-space:nowrap}
+.tl-chevron{color:var(--text3);font-size:14px;transition:transform .3s;margin-left:8px}
+.tl-item.open .tl-chevron{transform:rotate(180deg)}
+.tl-body-wrap{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.tl-item.open .tl-body-wrap{max-height:200px}
+.tl-body{padding:16px 20px;font-size:13px;color:var(--text2);line-height:1.7;border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;background:var(--bg3)}
+.tl-progress{margin-bottom:24px}
+.tl-prog-bar{height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;margin:8px 0}
+.tl-prog-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .4s}
+.tl-prog-lbl{font-size:12px;color:var(--text3)}
+
+/* INDIA GUIDE */
+.india-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:32px}
+.india-stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative;overflow:hidden}
+.india-stat-card::after{content:'';position:absolute;bottom:0;right:0;width:60px;height:60px;border-radius:50%;background:var(--accent-dim);transform:translate(20px,20px)}
+.isc-badge{font-size:10px;font-weight:600;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.isc-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--text);margin-bottom:4px}
+.isc-label{font-size:12px;color:var(--text2);line-height:1.4}
+.india-rules{display:flex;flex-direction:column;gap:0}
+.india-rule{padding:18px 0;border-bottom:1px solid var(--border)}
+.india-rule:last-child{border-bottom:none}
+.india-rule-term{font-size:14px;font-weight:600;margin-bottom:6px;color:var(--text)}
+.india-rule-def{font-size:13px;color:var(--text2);line-height:1.6}
+.links-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px}
+.ext-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--accent);padding:8px 16px;border-radius:8px;border:1px solid rgba(245,158,11,0.3);background:var(--accent-dim);text-decoration:none;transition:all .2s}
+.ext-link:hover{background:rgba(245,158,11,0.25);border-color:var(--accent)}
+.ext-link-arrow{font-size:10px}
+
+/* VOTER CHECKLIST */
+.voter-prog{margin-bottom:24px}
+.voter-prog-bar{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin:8px 0}
+.voter-prog-fill{height:100%;background:var(--accent-green);border-radius:3px;transition:width .4s}
+.voter-prog-lbl{font-size:13px;color:var(--text3)}
+.checklist{display:flex;flex-direction:column;gap:8px}
+.check-item{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:all .2s}
+.check-item:hover{border-color:var(--border2)}
+.check-item.checked{background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.3)}
+.check-box{width:20px;height:20px;border-radius:5px;border:2px solid var(--surface2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .2s;color:#000}
+.check-item.checked .check-box{background:var(--accent-green);border-color:var(--accent-green);color:#fff}
+.check-label{font-size:14px;font-weight:600;transition:all .2s}
+.check-desc{font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5}
+.check-item.checked .check-label{text-decoration:line-through;color:var(--text2)}
+.check-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);min-width:20px;margin-top:2px}
+
+/* TYPES */
+.types-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.type-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px;transition:all .2s}
+.type-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.type-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:12px}
+.tag-blue{background:rgba(59,130,246,0.15);color:#60A5FA}
+.tag-purple{background:rgba(139,92,246,0.15);color:#A78BFA}
+.tag-green{background:rgba(16,185,129,0.15);color:#34D399}
+.tag-teal{background:rgba(6,182,212,0.15);color:#22D3EE}
+.tag-amber{background:rgba(245,158,11,0.15);color:#FCD34D}
+.tag-coral{background:rgba(239,68,68,0.15);color:#FCA5A5}
+.type-card h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;margin-bottom:8px}
+.type-card p{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* GLOSSARY */
+.glos-grid{display:flex;flex-direction:column;gap:0}
+.glos-item{padding:18px 0;border-bottom:1px solid var(--border);display:flex;gap:20px}
+.glos-item:last-child{border-bottom:none}
+.glos-term{font-size:14px;font-weight:600;min-width:200px;color:var(--text)}
+.glos-def{font-size:13px;color:var(--text2);line-height:1.6}
+@media(max-width:600px){.glos-item{flex-direction:column;gap:6px}.glos-term{min-width:unset}}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:0}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0;cursor:pointer;font-size:15px;font-weight:500;color:var(--text)}
+.faq-q:hover{color:var(--accent)}
+.faq-icon{width:24px;height:24px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text2);flex-shrink:0;transition:all .3s}
+.faq-item.open .faq-icon{background:var(--accent-dim);border-color:rgba(245,158,11,0.4);transform:rotate(45deg);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-item.open .faq-a{max-height:200px}
+.faq-text{font-size:14px;color:var(--text2);line-height:1.7;padding-bottom:18px}
+
+/* QUIZ */
+.quiz-wrap{max-width:680px}
+.quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.quiz-header h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:600}
+.quiz-counter{font-family:'DM Mono',monospace;font-size:13px;color:var(--text3)}
+.quiz-prog-bar{height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;margin-bottom:28px}
+.quiz-prog-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .4s}
+.quiz-q-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px}
+.quiz-q-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);margin-bottom:10px}
+.quiz-q-text{font-size:17px;font-weight:600;line-height:1.5;margin-bottom:20px;font-family:'Playfair Display',serif}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{text-align:left;padding:12px 18px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:14px;font-weight:400;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;line-height:1.5}
+.quiz-opt:hover:not(:disabled){border-color:var(--border2);background:var(--surface)}
+.quiz-opt:disabled{cursor:default}
+.quiz-opt.correct{background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.5);color:#34D399;font-weight:500}
+.quiz-opt.wrong{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.4);color:#FCA5A5}
+.quiz-opt.reveal{background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.4);color:#93C5FD}
+.quiz-exp{font-size:13px;color:var(--text2);padding:12px 16px;background:var(--surface);border-radius:8px;margin-top:14px;line-height:1.6;display:none}
+.quiz-next{margin-top:16px;background:var(--accent);color:#000;font-size:14px;font-weight:600;padding:10px 24px;border-radius:8px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .2s;display:none}
+.quiz-next:hover{background:#D97706}
+.quiz-score-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:40px;text-align:center;display:none}
+.qs-big{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;color:var(--accent)}
+.qs-label{font-size:15px;color:var(--text2);margin-bottom:8px}
+.qs-msg{font-size:14px;color:var(--text2);margin-bottom:24px;line-height:1.6}
+.quiz-restart{background:var(--accent);color:#000;font-size:14px;font-weight:600;padding:12px 28px;border-radius:8px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .2s}
+.quiz-restart:hover{background:#D97706}
+
+/* COUNTDOWN */
+.cd-form{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px}
+.cd-form label{font-size:13px;color:var(--text2);display:block;margin-bottom:6px}
+.cd-form input[type=text],.cd-form input[type=date]{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;margin-bottom:12px}
+.cd-form input:focus{outline:none;border-color:var(--accent)}
+.cd-add-btn{background:var(--accent);color:#000;font-size:14px;font-weight:600;padding:10px 20px;border-radius:8px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
+.cd-add-btn:hover{background:#D97706}
+.cd-active{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;display:none}
+.cd-active.visible{display:block}
+.cd-election-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;margin-bottom:4px}
+.cd-date-lbl{font-size:12px;color:var(--text3);margin-bottom:20px}
+.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.cd-unit{background:var(--surface);border-radius:12px;padding:20px 12px;text-align:center;border:1px solid var(--border)}
+.cd-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.cd-lbl{font-size:11px;color:var(--text3);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+.cd-expired{font-size:16px;font-weight:500;color:var(--red);text-align:center;padding:20px}
+.saved-list{display:flex;flex-direction:column;gap:8px}
+.saved-item{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s}
+.saved-item:hover{border-color:var(--border2)}
+.saved-item.active-item{border-color:rgba(245,158,11,0.5);background:var(--accent-dim)}
+.saved-name{font-size:14px;font-weight:500;flex:1}
+.saved-date{font-size:12px;color:var(--text3)}
+.saved-del{font-size:12px;color:var(--red);cursor:pointer;padding:2px 8px;border-radius:4px;background:rgba(239,68,68,0.1);border:none;font-family:'DM Sans',sans-serif;color:#FCA5A5}
+.saved-del:hover{background:rgba(239,68,68,0.2)}
+.cd-presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cd-preset-btn{font-size:12px;font-weight:500;padding:5px 12px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.cd-preset-btn:hover{background:var(--surface);color:var(--text)}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24px;text-align:center;margin-top:40px}
+.footer-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px}
+.footer-sub{font-size:13px;color:var(--text3);line-height:1.6}
+.footer-flag{display:flex;justify-content:center;gap:0;margin-top:16px}
+.ff{width:24px;height:8px}
+.ff1{background:var(--saffron)}
+.ff2{background:#fff}
+.ff3{background:var(--india-green)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .6s ease forwards}
+.fade-up-1{animation-delay:.1s;opacity:0}
+.fade-up-2{animation-delay:.2s;opacity:0}
+.fade-up-3{animation-delay:.3s;opacity:0}
+.fade-up-4{animation-delay:.4s;opacity:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.pulse{animation:pulse 2s infinite}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  section{padding:60px 16px}
+  #hero{padding:100px 16px 60px}
+  .hero-title{font-size:36px}
+  .cd-grid{grid-template-columns:repeat(2,1fr)}
+  .glos-item{flex-direction:column;gap:6px}
+  .glos-term{min-width:unset}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><div class="logo-dot"></div>VoteIQ</div>
+    <div class="nav-links">
+      <a class="nav-link" href="#overview">Overview</a>
+      <a class="nav-link" href="#timeline">Timeline</a>
+      <a class="nav-link" href="#india">India Guide</a>
+      <a class="nav-link" href="#voter">Voter Guide</a>
+      <a class="nav-link" href="#types">Types</a>
+      <a class="nav-link" href="#glossary">Glossary</a>
+      <a class="nav-link" href="#faq">FAQ</a>
+      <a class="nav-link" href="#quiz">Quiz <span class="nav-badge">10 Qs</span></a>
+      <a class="nav-link" href="#countdown">Countdown</a>
+    </div>
+    <div class="hamburger" onclick="toggleMobileNav()" id="ham">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a class="nav-link" href="#overview" onclick="closeMobileNav()">Overview</a>
+  <a class="nav-link" href="#timeline" onclick="closeMobileNav()">Timeline</a>
+  <a class="nav-link" href="#india" onclick="closeMobileNav()">India Guide</a>
+  <a class="nav-link" href="#voter" onclick="closeMobileNav()">Voter Guide</a>
+  <a class="nav-link" href="#types" onclick="closeMobileNav()">Types</a>
+  <a class="nav-link" href="#glossary" onclick="closeMobileNav()">Glossary</a>
+  <a class="nav-link" href="#faq" onclick="closeMobileNav()">FAQ</a>
+  <a class="nav-link" href="#quiz" onclick="closeMobileNav()">Quiz</a>
+  <a class="nav-link" href="#countdown" onclick="closeMobileNav()">Countdown</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-flag"></div>
+  <div class="hero-eyebrow fade-up fade-up-1">
+    <span class="pulse">●</span>
+    <span>India Election Education Platform</span>
+  </div>
+  <h1 class="hero-title fade-up fade-up-2">
+    Understanding<br><em>Democracy,</em><br>Step by Step.
+  </h1>
+  <p class="hero-sub fade-up fade-up-3">
+    From voter registration to counting day — explore the complete Indian election process with interactive timelines, quizzes, and real-time countdowns.
+  </p>
+  <div class="hero-btns fade-up fade-up-4">
+    <a href="#overview" class="btn-primary">Explore the Process</a>
+    <a href="#quiz" class="btn-secondary">Take the Quiz</a>
+  </div>
+  <div class="hero-stats fade-up fade-up-4">
+    <div class="hero-stat">
+      <div class="hero-stat-num">969M+</div>
+      <div class="hero-stat-lbl">Registered voters in India (2024)</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">543</div>
+      <div class="hero-stat-lbl">Lok Sabha constituencies</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">18</div>
+      <div class="hero-stat-lbl">Minimum voting age</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">1950</div>
+      <div class="hero-stat-lbl">Voter helpline number</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">Jan 25</div>
+      <div class="hero-stat-lbl">National Voters' Day</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-tag">01 — Overview</div>
+  <h2 class="section-title">Three phases of every election</h2>
+  <p class="section-sub">Every election in India follows a structured process managed by the Election Commission of India. Click a phase to learn more.</p>
+  <div class="phases-grid">
+    <div class="phase-card" onclick="selectPhase(this,'pre')">
+      <div class="phase-num">PHASE 01</div>
+      <div class="phase-icon">📋</div>
+      <h3>Pre-Election</h3>
+      <p>Announcement, registration, nominations, campaigns, and Model Code of Conduct enforcement.</p>
+    </div>
+    <div class="phase-card" onclick="selectPhase(this,'day')">
+      <div class="phase-num">PHASE 02</div>
+      <div class="phase-icon">🗳️</div>
+      <h3>Election Day</h3>
+      <p>Polling stations open, voters cast ballots on EVMs with VVPAT verification, booths are sealed.</p>
+    </div>
+    <div class="phase-card" onclick="selectPhase(this,'post')">
+      <div class="phase-num">PHASE 03</div>
+      <div class="phase-icon">📊</div>
+      <h3>Post-Election</h3>
+      <p>Counting of EVM votes, results declaration, certification, and transition of power.</p>
+    </div>
+  </div>
+  <div class="phase-detail" id="phase-detail">
+    <p style="color:var(--text3);font-size:14px">↑ Select a phase above to see detailed information.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-tag">02 — Timeline</div>
+  <h2 class="section-title">Election timeline, step by step</h2>
+  <p class="section-sub">Click each step to expand the full details. Track your progress below.</p>
+  <div class="tl-progress">
+    <div class="tl-prog-lbl" id="tl-lbl">0 of 8 steps explored</div>
+    <div class="tl-prog-bar"><div class="tl-prog-fill" id="tl-fill" style="width:0%"></div></div>
+  </div>
+  <div class="timeline-wrap">
+    <div class="timeline-line"></div>
+    <div class="tl-item" onclick="toggleTL(this,0)">
+      <div class="tl-dot"></div>
+      <div class="tl-header"><span class="tl-step">01</span><span class="tl-title">Election announced</span><span class="tl-time">Months before</span><span class="tl-chevron">▾</span></div>
+      <div class="tl-body-wrap"><div class="tl-body">The Election Commission of India (ECI) announces the election schedule including polling dates, counting date, and key deadlines. The Model Code of Conduct (MCC) comes into force immediately — the government cannot announce new welfare schemes or use state machinery for campaigns from this moment.</div></div>
+    </div>
+    <div class="tl-item" onclick="toggleTL(this,1)">
+      <div class="tl-dot"></div>
+      <div class="tl-header"><span class="tl-step">02</span><span class="tl-title">Voter registration</span><span class="tl-time">Ongoing</span><span class="tl-chevron">▾</span></div>
+      <div class="tl-body-wrap"><div class="tl-body">Citizens 18+ can register using Form 6 online at voters.eci.gov.in or at their Electoral Registration Officer (ERO). A photo Voter ID card (EPIC) is issued. Voters can verify their names on the electoral roll at electoralsearch.in or by calling 1950. Name corrections use Form 8.</div></div>
+    </div>
+    <div class="tl-item" onclick="toggleTL(this,2)">
+      <div class="tl-dot"></div>
+      <div class="tl-header"><span class="tl-step">03</span><span class="tl-title">Candidate nominations</span><span class="tl-time">Weeks before</span><span class="tl-chevron">▾</span></div>
+      <div class="tl-body-wrap"><div class="tl-body">Candidates file nomination papers with the Returning Officer. A security deposit of ₹25,000 (General) or ₹12,500 (SC/ST) is required for Lok Sabha. Candidates must disclose criminal records, assets, and educational qualifications publicly. Scrutiny and withdrawal deadlines follow.</div></div>
+    </div>
+    <div class="tl-item" onclick="toggleTL(this,3)">
+      <div class="tl-dot"></div>
+      <div class="tl-header"><span class="tl-step">04</span><span class="tl-title">Campaign period</span><span class="tl-time">Weeks before</span><span class="tl-chevron">▾</span></div>
+      <div class="tl-body-wrap"><div class="tl-body">Parties hold rallies, debates, and run ads. Campaign expenditure is capped at ₹95 lakh per candidate for Lok Sabha in most states. A 48-hour campaign silence begins before polling. Exit polls cannot be broadcast until all phases across India conclude.</div></div>
+    </div>
+    <div class="tl-item" onclick="toggleTL(this,4)">
+      <div class="tl-dot"></div>
+      <div class="tl-header"><span class="tl-step">05</span><span class="tl-title">Polling day — voting</span><span class="tl-time">Election day</span><span class="tl-chevron">▾</span></div>
+      <div class="tl-body-wrap"><div class="tl-body">Polling stations open 7 AM to 6 PM. Voters present EPIC or an approved alternate ID. Votes are cast on EVMs — a VVPAT slip is printed for 7 seconds confirming the voter's choice. Security forces (typically CRPF) are deployed. Multi-phase polls spread voting over several days across different states.</div></div>
+    </div>
+    <div class="tl-item" onclick="toggleTL(this,5)">
+      <div class="tl-dot"></div>
+      <div class="tl-header"><span class="tl-step">06</span><span class="tl-title">Polls close — EVMs sealed</span><span class="tl-time">End of polling</span><span class="tl-chevron">▾</span></div>
+      <div class="tl-body-wrap"><div class="tl-body">After the last voter votes, EVMs and VVPAT machines are sealed. They are transported to strong rooms under armed guard. Candidate agents receive mock poll slips as receipts. Multi-layer physical and digital security ensures tamper-proof storage until counting day.</div></div>
+    </div>
+    <div class="tl-item" onclick="toggleTL(this,6)">
+      <div class="tl-dot"></div>
+      <div class="tl-header"><span class="tl-step">07</span><span class="tl-title">Counting day and results</span><span class="tl-time">Designated day</span><span class="tl-chevron">▾</span></div>
+      <div class="tl-body-wrap"><div class="tl-body">EVMs are opened at counting centres under supervision. Counting agents from each party observe. Results are transmitted to ECI in real time. The candidate with the most votes in each constituency wins (First-Past-The-Post). NOTA results are also announced. Candidates may request recounts.</div></div>
+    </div>
+    <div class="tl-item" onclick="toggleTL(this,7)">
+      <div class="tl-dot"></div>
+      <div class="tl-header"><span class="tl-step">08</span><span class="tl-title">Government formation</span><span class="tl-time">Days after results</span><span class="tl-chevron">▾</span></div>
+      <div class="tl-body-wrap"><div class="tl-body">The President invites the party or coalition with 272+ seats to form the government. Coalition talks may precede this in a hung parliament. The Prime Minister and Cabinet are sworn in. The outgoing government remains as caretaker until swearing-in is complete.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INDIA GUIDE -->
+<section id="india">
+  <div class="section-tag">03 — India Guide</div>
+  <h2 class="section-title">India's election system</h2>
+  <p class="section-sub">Key facts, rules, and links specific to how India conducts its elections under the Election Commission.</p>
+  <div class="india-stats">
+    <div class="india-stat-card">
+      <div class="isc-badge">Lok Sabha</div>
+      <div class="isc-num">543</div>
+      <div class="isc-label">Parliamentary seats, elected every 5 years via FPTP</div>
+    </div>
+    <div class="india-stat-card">
+      <div class="isc-badge">Rajya Sabha</div>
+      <div class="isc-num">245</div>
+      <div class="isc-label">Upper house members, indirectly elected by state assemblies</div>
+    </div>
+    <div class="india-stat-card">
+      <div class="isc-badge">Electorate</div>
+      <div class="isc-num">969M+</div>
+      <div class="isc-label">Registered voters — world's largest democratic electorate</div>
+    </div>
+    <div class="india-stat-card">
+      <div class="isc-badge">Technology</div>
+      <div class="isc-num">EVM</div>
+      <div class="isc-label">Used since 2004 — standalone, non-networked voting machines</div>
+    </div>
+    <div class="india-stat-card">
+      <div class="isc-badge">Option</div>
+      <div class="isc-num">NOTA</div>
+      <div class="isc-label">None of the Above — available on every EVM since 2013</div>
+    </div>
+    <div class="india-stat-card">
+      <div class="isc-badge">Body</div>
+      <div class="isc-num">ECI</div>
+      <div class="isc-label">Constitutional body under Article 324 — fully independent</div>
+    </div>
+  </div>
+  <h3 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:20px">India-specific rules</h3>
+  <div class="india-rules">
+    <div class="india-rule">
+      <div class="india-rule-term">Model Code of Conduct (MCC)</div>
+      <div class="india-rule-def">Activated immediately when election dates are announced. Restricts the government from announcing new welfare schemes, making official transfers, or using state funds/machinery for campaigning. Violating the MCC can lead to show-cause notices from ECI.</div>
+    </div>
+    <div class="india-rule">
+      <div class="india-rule-term">Alternate voter ID (12 documents accepted)</div>
+      <div class="india-rule-def">If you don't have an EPIC card, you may use: Aadhaar, Passport, Driving Licence, MNREGA Job Card, Bank/Post Office Passbook with photo, Smart Card issued by Ministry of Labour, CGHS/ECHS photo card, Pension document with photo, or official identity document issued by Government of India/State.</div>
+    </div>
+    <div class="india-rule">
+      <div class="india-rule-term">Campaign expenditure limits</div>
+      <div class="india-rule-def">Lok Sabha: ₹95 lakh per candidate (larger states), ₹75 lakh (smaller states/UTs). State Assembly: ₹40 lakh per candidate (larger states). Expenses are tracked by ECI-appointed expenditure observers. Violation can lead to disqualification under RPA 1951.</div>
+    </div>
+    <div class="india-rule">
+      <div class="india-rule-term">Anti-defection law (10th Schedule)</div>
+      <div class="india-rule-def">MPs and MLAs who switch parties or vote against their party whip without sanction can be disqualified. The Speaker (Lok Sabha) or Chairman (Rajya Sabha) adjudicates defection cases. This was introduced by the 52nd Constitutional Amendment in 1985.</div>
+    </div>
+    <div class="india-rule">
+      <div class="india-rule-term">VVPAT verification</div>
+      <div class="india-rule-def">Since 2019, every EVM is paired with a Voter Verifiable Paper Audit Trail machine. After you press the EVM button, a paper slip appears behind a glass screen for 7 seconds showing your candidate's name and symbol before dropping into a sealed box. This adds a physical audit trail to electronic voting.</div>
+    </div>
+    <div class="india-rule">
+      <div class="india-rule-term">Paid news prohibition</div>
+      <div class="india-rule-def">Publishing or broadcasting any news or article for payment without disclosure as an advertisement is prohibited and treated as a corrupt practice under the Representation of the People Act. ECI monitors media during elections through Media Certification and Monitoring Committees (MCMCs).</div>
+    </div>
+  </div>
+  <div class="links-row">
+    <a class="ext-link" href="https://www.eci.gov.in" target="_blank">ECI Official <span class="ext-link-arrow">↗</span></a>
+    <a class="ext-link" href="https://voters.eci.gov.in" target="_blank">Register to Vote <span class="ext-link-arrow">↗</span></a>
+    <a class="ext-link" href="https://electoralsearch.in" target="_blank">Find Your Name <span class="ext-link-arrow">↗</span></a>
+    <a class="ext-link" href="https://affidavit.eci.gov.in" target="_blank">Candidate Affidavits <span class="ext-link-arrow">↗</span></a>
+    <a class="ext-link" href="https://www.nvsp.in" target="_blank">NVSP Portal <span class="ext-link-arrow">↗</span></a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VOTER GUIDE -->
+<section id="voter">
+  <div class="section-tag">04 — Voter Guide</div>
+  <h2 class="section-title">Your voter checklist</h2>
+  <p class="section-sub">Complete each step to be ready to vote in India. Check items off as you go.</p>
+  <div class="voter-prog">
+    <div class="voter-prog-lbl" id="vc-lbl">0 of 7 steps complete</div>
+    <div class="voter-prog-bar"><div class="voter-prog-fill" id="vc-fill" style="width:0%"></div></div>
+  </div>
+  <div class="checklist" id="checklist">
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-num">01</div>
+      <div class="check-box"></div>
+      <div><div class="check-label">Confirm your eligibility</div><div class="check-desc">Indian citizen, aged 18 or above, ordinarily resident in the constituency where you want to register.</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-num">02</div>
+      <div class="check-box"></div>
+      <div><div class="check-label">Register to vote using Form 6</div><div class="check-desc">Apply online at voters.eci.gov.in or visit your local Electoral Registration Officer (ERO). Aadhaar linkage is optional but recommended.</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-num">03</div>
+      <div class="check-box"></div>
+      <div><div class="check-label">Receive and secure your EPIC card</div><div class="check-desc">Your Elector's Photo Identity Card (Voter ID) will be issued. Keep it safe — it is your primary polling document and a useful ID in general.</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-num">04</div>
+      <div class="check-box"></div>
+      <div><div class="check-label">Verify your name on the electoral roll</div><div class="check-desc">Check electoralsearch.in or call 1950 to confirm your name, booth number, part number, and serial number in the official voter list.</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-num">05</div>
+      <div class="check-box"></div>
+      <div><div class="check-label">Find your polling booth</div><div class="check-desc">Your voter slip or the ECI Voter Helpline App shows your assigned booth address, booth number, and polling officer details.</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-num">06</div>
+      <div class="check-box"></div>
+      <div><div class="check-label">Research candidates before voting</div><div class="check-desc">Check candidate affidavits (criminal records, assets, education) publicly available at affidavit.eci.gov.in before making your decision.</div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-num">07</div>
+      <div class="check-box"></div>
+      <div><div class="check-label">Vote on polling day</div><div class="check-desc">Bring your EPIC or an approved alternate ID. Press the EVM button next to your candidate. Watch the VVPAT slip confirm your vote. Your vote is secret and cannot be traced back to you.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TYPES -->
+<section id="types">
+  <div class="section-tag">05 — Types</div>
+  <h2 class="section-title">Types of elections in India</h2>
+  <p class="section-sub">India holds several distinct types of elections across national, state, and local levels.</p>
+  <div class="types-grid">
+    <div class="type-card">
+      <div class="type-tag tag-blue">National</div>
+      <h3>General Election (Lok Sabha)</h3>
+      <p>Elects 543 MPs every 5 years. Determines which party or coalition forms the Central Government and who becomes Prime Minister.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-tag tag-teal">State</div>
+      <h3>State Assembly (Vidhan Sabha)</h3>
+      <p>Each state elects its legislative assembly. The majority party forms the state government led by the Chief Minister. Timing varies by state.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-tag tag-purple">Upper House</div>
+      <h3>Rajya Sabha Election</h3>
+      <p>Members are indirectly elected by state legislative assemblies using single transferable vote. One-third retire every two years. Citizens do not vote directly.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-tag tag-green">Local Body</div>
+      <h3>Panchayat / Municipal</h3>
+      <p>Elections for gram panchayats, panchayat samitis, town municipalities, and city corporations. Conducted by State Election Commissions, not ECI.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-tag tag-amber">Interim</div>
+      <h3>By-Election (Upchunav)</h3>
+      <p>Held to fill a vacant MP or MLA seat caused by death, disqualification, resignation, or court order. Smaller in scope than a general election.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-tag tag-coral">Executive</div>
+      <h3>Presidential Election</h3>
+      <p>India's President is chosen by an Electoral College of elected MPs and MLAs using the single transferable vote system — not by direct public vote.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GLOSSARY -->
+<section id="glossary">
+  <div class="section-tag">06 — Glossary</div>
+  <h2 class="section-title">Key election terms</h2>
+  <p class="section-sub">Essential vocabulary for understanding the Indian election process.</p>
+  <div class="glos-grid">
+    <div class="glos-item"><div class="glos-term">EVM (Electronic Voting Machine)</div><div class="glos-def">A standalone, non-networked electronic device used to record votes in India since 2004. Contains a one-time programmable chip. Cannot be hacked remotely. Paired with VVPAT for transparency since 2019.</div></div>
+    <div class="glos-item"><div class="glos-term">VVPAT</div><div class="glos-def">Voter Verifiable Paper Audit Trail — a machine attached to the EVM that prints a paper slip showing the voter's chosen candidate for 7 seconds before it drops into a sealed compartment. Provides a physical audit trail.</div></div>
+    <div class="glos-item"><div class="glos-term">EPIC (Voter ID Card)</div><div class="glos-def">Elector's Photo Identity Card — the official voter identification document issued by ECI. Required at polling booths, though 12 alternate IDs are also accepted.</div></div>
+    <div class="glos-item"><div class="glos-term">Electoral Roll</div><div class="glos-def">The official list of all registered voters in a constituency. Published and updated by Electoral Registration Officers. You must appear on this list to vote. Verifiable at electoralsearch.in.</div></div>
+    <div class="glos-item"><div class="glos-term">First-Past-The-Post (FPTP)</div><div class="glos-def">India's voting system — the candidate with the most votes in a constituency wins, even without an absolute majority. A candidate can win with as little as 25–30% of votes if others split the rest.</div></div>
+    <div class="glos-item"><div class="glos-term">Model Code of Conduct</div><div class="glos-def">A set of guidelines issued by ECI that governs political parties and candidates during elections. Comes into force on the day elections are announced and stays until results are declared.</div></div>
+    <div class="glos-item"><div class="glos-term">NOTA (None of the Above)</div><div class="glos-def">An option on every Indian EVM since 2013 allowing voters to reject all candidates on the ballot. NOTA votes are counted and announced but do not affect the result — the candidate with the highest non-NOTA votes wins.</div></div>
+    <div class="glos-item"><div class="glos-term">Returning Officer</div><div class="glos-def">The District Magistrate or senior official designated by ECI to manage the election in one constituency — overseeing nominations, polling, and officially declaring the result.</div></div>
+    <div class="glos-item"><div class="glos-term">Hung Parliament</div><div class="glos-def">When no single party wins 272+ seats (simple majority in the 543-seat Lok Sabha). Coalition governments are formed through negotiation. India has seen hung parliaments in 1989, 1996, 1998, 1999, and 2009.</div></div>
+    <div class="glos-item"><div class="glos-term">Exit Poll</div><div class="glos-def">A survey of voters conducted right after they vote. In multi-phase Indian elections, exit polls cannot be published or broadcast until the final phase of polling ends — to avoid influencing later-phase voters.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-tag">07 — FAQ</div>
+  <h2 class="section-title">Frequently asked questions</h2>
+  <p class="section-sub">Answers to the most common questions about voting in India.</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">Who is eligible to vote in India? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-text">Any Indian citizen aged 18 or above who is registered in the electoral roll of their constituency. NRIs holding Indian passports can register and must vote in person at their home constituency (postal/proxy voting not available for NRIs). People declared of unsound mind by a court, and those imprisoned and serving a sentence are excluded.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">Can I vote without a Voter ID card? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-text">Yes. ECI accepts 12 alternate photo ID documents: Aadhaar card, Passport, Driving Licence, MNREGA job card, Bank/Post Office passbook with photo, Smart Card (ECHS/CGHS), Pension document with photo, and others. However, your name must still appear on the electoral roll — the ID only verifies your identity at the booth.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">Are EVMs tamper-proof and reliable? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-text">EVMs use one-time programmable microcontrollers and are not connected to the internet or any network. They are sealed before and after polling and stored under armed guard. The VVPAT adds a paper verification layer. The Supreme Court has upheld EVM validity in multiple cases, including in 2024, declining to revert to paper ballots.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">What if I have moved to a new city? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-text">You must re-register in your new constituency using Form 6 at voters.eci.gov.in. Also delete your name from the old constituency's roll using Form 7. You can vote only where you are registered, so update before the registration deadline in your new area — typically 60–90 days before the election.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">Is my vote really a secret? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-text">Yes. The secret ballot is a fundamental principle. EVMs do not record which voter pressed which button. The electoral roll serial number given to you is not linked to the EVM unit. Polling booths have screened sections ensuring no one sees your choice. No person can legally compel you to reveal your vote.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">What happens if the result is very close? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-text">Any candidate can request a recount by applying to the Returning Officer before the result is formally declared. Recounts are allowed at the Returning Officer's discretion. Election results can be challenged in the High Court through an Election Petition filed within 45 days. Courts can set aside a result if electoral malpractice is proven.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">When is National Voters' Day and why does it matter? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><div class="faq-text">January 25th — the founding anniversary of the Election Commission of India (established 1950). It is observed every year since 2011 to encourage political participation, especially among first-time voters who turn 18. New voters who registered in the preceding calendar year are felicitated at special events and given their EPIC cards on this day.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="section-tag">08 — Quiz</div>
+  <h2 class="section-title">Test your knowledge</h2>
+  <p class="section-sub">10 questions on the Indian election process. Click an option to answer.</p>
+  <div class="quiz-wrap">
+    <div class="quiz-score-card" id="quizScoreCard">
+      <div class="qs-label">Your final score</div>
+      <div class="qs-big" id="quizScoreNum">0/10</div>
+      <div class="qs-msg" id="quizScoreMsg"></div>
+      <button class="quiz-restart" onclick="resetQuiz()">Retake Quiz</button>
+    </div>
+    <div id="quizMain">
+      <div class="quiz-header">
+        <h3>India Election Quiz</h3>
+        <span class="quiz-counter" id="quizCounter">1 / 10</span>
+      </div>
+      <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="quizFill" style="width:10%"></div></div>
+      <div class="quiz-q-card" id="quizCard"></div>
+      <button class="quiz-next" id="quizNextBtn" onclick="nextQuestion()">Next question →</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COUNTDOWN -->
+<section id="countdown">
+  <div class="section-tag">09 — Countdown</div>
+  <h2 class="section-title">Election countdown timer</h2>
+  <p class="section-sub">Add any upcoming election and track the time remaining in real time.</p>
+
+  <div class="cd-active" id="cdDisplay">
+    <div class="cd-election-name" id="cdName">Bihar Assembly Election 2025</div>
+    <div class="cd-date-lbl" id="cdDateLbl"></div>
+    <div class="cd-grid" id="cdGrid">
+      <div class="cd-unit"><div class="cd-num" id="cdDays">00</div><div class="cd-lbl">Days</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cdHours">00</div><div class="cd-lbl">Hours</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cdMins">00</div><div class="cd-lbl">Minutes</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cdSecs">00</div><div class="cd-lbl">Seconds</div></div>
+    </div>
+  </div>
+
+  <div class="cd-form">
+    <label>Election name</label>
+    <input type="text" id="cdElectionName" placeholder="e.g. Delhi Assembly Election 2026" />
+    <label>Election date</label>
+    <input type="date" id="cdDate" />
+    <button class="cd-add-btn" onclick="addCountdown()">Add Countdown</button>
+    <div class="cd-presets">
+      <button class="cd-preset-btn" onclick="addPreset('Bihar Assembly Election 2025','2025-10-15')">Bihar 2025</button>
+      <button class="cd-preset-btn" onclick="addPreset('Delhi Assembly Election 2026','2026-02-05')">Delhi 2026</button>
+      <button class="cd-preset-btn" onclick="addPreset('UP Assembly Election 2027','2027-02-10')">UP 2027</button>
+      <button class="cd-preset-btn" onclick="addPreset('Lok Sabha General Election 2029','2029-04-01')">Lok Sabha 2029</button>
+    </div>
+  </div>
+
+  <div class="saved-list" id="savedList"></div>
+</section>
+
+<div class="divider"></div>
+
+<footer>
+  <div class="footer-logo">VoteIQ</div>
+  <p class="footer-sub">An interactive guide to India's election process.<br>Data for educational purposes. For official information visit eci.gov.in</p>
+  <div class="footer-flag">
+    <div class="ff ff1"></div>
+    <div class="ff ff2"></div>
+    <div class="ff ff3"></div>
+  </div>
+</footer>
+
+<script>
+// ── NAV ──
+function toggleMobileNav(){document.getElementById('mobileNav').classList.toggle('open')}
+function closeMobileNav(){document.getElementById('mobileNav').classList.remove('open')}
+window.addEventListener('scroll',()=>{
+  const sections=['overview','timeline','india','voter','types','glossary','faq','quiz','countdown'];
+  let cur='';
+  sections.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<=80)cur=id;});
+  document.querySelectorAll('.nav-link').forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+cur)});
+});
+
+// ── PHASES ──
+const phases={
+  pre:{tag:'Phase 01 — Pre-Election',title:'Pre-election phase',body:'This is the longest phase. It begins the moment the Election Commission announces the schedule and ends the day before polling. It covers voter registration, candidate nominations, scrutiny and withdrawal, the full campaign period, and enforcement of the Model Code of Conduct. The ECI sets up polling infrastructure, trains staff, and deploys election observers across constituencies.'},
+  day:{tag:'Phase 02 — Election Day',title:'Election day / polling',body:'Polling stations open at 7 AM and close at 6 PM (voters already in queue at 6 PM can still vote). Voters present ID, are verified against the electoral roll, and cast their vote on the EVM. A VVPAT slip confirms the choice. Security forces maintain order. In India, elections are often conducted in multiple phases across different states over several weeks to manage logistics and security.'},
+  post:{tag:'Phase 03 — Post-Election',title:'Post-election phase',body:'Once all phases conclude, EVMs are opened at counting centres on the designated counting day. Results are declared constituency by constituency. The ECI certifies final results. The President invites the majority party or coalition to form the government. The PM and Cabinet are sworn in. The outgoing government functions as caretaker until the new government takes charge.'}
+};
+function selectPhase(el,key){
+  document.querySelectorAll('.phase-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const d=phases[key];
+  document.getElementById('phase-detail').innerHTML=`<div class="phase-detail-tag">${d.tag}</div><h3>${d.title}</h3><p style="margin-top:8px;font-size:14px;color:var(--text2);line-height:1.7">${d.body}</p>`;
+}
+
+// ── TIMELINE ──
+const tlSeen=new Set();
+function toggleTL(el,idx){
+  const isOpen=el.classList.contains('open');
+  el.classList.toggle('open',!isOpen);
+  if(!isOpen)tlSeen.add(idx);
+  const fill=Math.round((tlSeen.size/8)*100);
+  document.getElementById('tl-fill').style.width=fill+'%';
+  document.getElementById('tl-lbl').textContent=tlSeen.size+' of 8 steps explored';
+  if(tlSeen.size===8)document.querySelectorAll('.tl-item').forEach(i=>i.classList.add('done'));
+}
+
+// ── CHECKLIST ──
+function toggleCheck(el){
+  el.classList.toggle('checked');
+  el.querySelector('.check-box').textContent=el.classList.contains('checked')?'✓':'';
+  const items=document.querySelectorAll('.check-item');
+  const done=document.querySelectorAll('.check-item.checked').length;
+  document.getElementById('vc-fill').style.width=Math.round((done/items.length)*100)+'%';
+  document.getElementById('vc-lbl').textContent=done+' of '+items.length+' steps complete';
+}
+
+// ── FAQ ──
+function toggleFAQ(el){
+  const item=el.parentElement;
+  item.classList.toggle('open');
+  item.querySelector('.faq-a').classList.toggle('open');
+}
+
+// ── QUIZ ──
+const questions=[
+  {q:'What is the minimum voting age in India?',opts:['16 years','18 years','21 years','25 years'],ans:1,exp:'The 61st Constitutional Amendment (1988) lowered the voting age from 21 to 18, effective from the 1989 general elections.'},
+  {q:'How many seats are there in the Lok Sabha?',opts:['545','543','550','520'],ans:1,exp:'The Lok Sabha has 543 elected seats from 543 constituencies. Two additional seats for Anglo-Indians were abolished by the 104th Amendment in 2020.'},
+  {q:'Which body conducts elections in India?',opts:['UPSC','ECI','Planning Commission','Law Ministry'],ans:1,exp:'The Election Commission of India (ECI) is an autonomous constitutional body established under Article 324. It supervises, directs, and controls all elections to Parliament, State Legislatures, and offices of President and Vice-President.'},
+  {q:'What does EVM stand for?',opts:['Electronic Voting Machine','Electoral Verification Method','Electronic Vote Monitor','Elector Verification Machine'],ans:0,exp:'EVM stands for Electronic Voting Machine. India started using EVMs in by-elections from 1982 and universally in general elections from 2004.'},
+  {q:'What is NOTA?',opts:['National Official Tally Agreement','None of the Above','National Online Token Authentication','None of the Allotted'],ans:1,exp:'NOTA (None of the Above) allows voters to formally reject all candidates on the ballot. It was introduced by the Supreme Court in 2013 and appears as the last option on every EVM.'},
+  {q:'What is the security deposit for a Lok Sabha candidate (General category)?',opts:['₹10,000','₹12,500','₹25,000','₹50,000'],ans:2,exp:'General category candidates must pay ₹25,000 as a security deposit when filing Lok Sabha nominations. SC/ST candidates pay ₹12,500. The deposit is forfeited if the candidate gets less than 1/6th of total valid votes.'},
+  {q:'What is the campaign silence period before polling?',opts:['24 hours','48 hours','72 hours','No restriction'],ans:1,exp:'The Model Code of Conduct mandates a 48-hour campaign silence period before the close of polling. During this window, no campaign activities, rallies, or political advertisements are permitted.'},
+  {q:'Which form is used for new voter registration in India?',opts:['Form 4','Form 6','Form 8','Form 9'],ans:1,exp:'Form 6 is used by new applicants to register as a voter in any constituency. Form 7 is for deletion/objection, Form 8 is for correction of details, and Form 8A is for shifting within the same constituency.'},
+  {q:'What does VVPAT stand for?',opts:['Voter Verified Paper Audit Trail','Voter Verifiable Paper Audit Trail','Verified Vote Paper Audit Track','Voter Verified Poll Audit Trail'],ans:1,exp:'VVPAT (Voter Verifiable Paper Audit Trail) is a mechanism attached to the EVM that prints a paper slip showing the voter\'s chosen candidate. The slip is visible for 7 seconds before dropping into a sealed compartment.'},
+  {q:'When is National Voters\' Day celebrated in India?',opts:['November 26','January 25','August 15','April 1'],ans:1,exp:'National Voters\' Day is celebrated on January 25 every year — the founding anniversary of the Election Commission of India (1950). It has been observed since 2011 to encourage voter registration and participation among youth.'}
+];
+let qIdx=0,score=0,answered=false;
+function renderQuestion(){
+  const q=questions[qIdx];
+  document.getElementById('quizCounter').textContent=(qIdx+1)+' / '+questions.length;
+  document.getElementById('quizFill').style.width=((qIdx+1)/questions.length*100)+'%';
+  document.getElementById('quizCard').innerHTML=`<div class="quiz-q-num">Question ${qIdx+1} of ${questions.length}</div><div class="quiz-q-text">${q.q}</div><div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answerQ(this,${i})">${o}</button>`).join('')}</div><div class="quiz-exp" id="qExp">${q.exp}</div>`;
+  document.getElementById('quizNextBtn').style.display='none';
+  answered=false;
+}
+function answerQ(btn,idx){
+  if(answered)return;
+  answered=true;
+  const q=questions[qIdx];
+  const opts=document.querySelectorAll('.quiz-opt');
+  opts.forEach(o=>o.disabled=true);
+  if(idx===q.ans){btn.classList.add('correct');score++;}
+  else{btn.classList.add('wrong');opts[q.ans].classList.add('reveal');}
+  document.getElementById('qExp').style.display='block';
+  document.getElementById('quizNextBtn').style.display='block';
+  document.getElementById('quizNextBtn').textContent=qIdx===questions.length-1?'See results →':'Next question →';
+}
+function nextQuestion(){
+  qIdx++;
+  if(qIdx>=questions.length){showScore();return;}
+  renderQuestion();
+}
+function showScore(){
+  document.getElementById('quizMain').style.display='none';
+  const sc=document.getElementById('quizScoreCard');
+  sc.style.display='block';
+  document.getElementById('quizScoreNum').textContent=score+'/'+questions.length;
+  const msgs=['Keep studying! Review the guide above.','Getting there! Read the India Guide section.','Good effort! A few more reads and you\'ll nail it.','Well done! You know your Indian elections.','Excellent! You\'re election-ready.','Perfect score! You could run for office.'];
+  const idx=Math.min(Math.floor(score/2),5);
+  document.getElementById('quizScoreMsg').textContent=msgs[idx];
+}
+function resetQuiz(){
+  qIdx=0;score=0;answered=false;
+  document.getElementById('quizScoreCard').style.display='none';
+  document.getElementById('quizMain').style.display='block';
+  renderQuestion();
+}
+renderQuestion();
+
+// ── COUNTDOWN ──
+let countdowns=[];
+let activeIdx=-1;
+let cdInterval=null;
+function addPreset(name,date){document.getElementById('cdElectionName').value=name;document.getElementById('cdDate').value=date;addCountdown();}
+function addCountdown(){
+  const name=document.getElementById('cdElectionName').value.trim();
+  const date=document.getElementById('cdDate').value;
+  if(!name||!date)return;
+  countdowns.push({name,date});
+  document.getElementById('cdElectionName').value='';
+  document.getElementById('cdDate').value='';
+  renderSaved();
+  setActive(countdowns.length-1);
+}
+function renderSaved(){
+  const list=document.getElementById('savedList');
+  list.innerHTML=countdowns.map((c,i)=>`<div class="saved-item${activeIdx===i?' active-item':''}" onclick="setActive(${i})"><span class="saved-name">${c.name}</span><span class="saved-date">${new Date(c.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</span><button class="saved-del" onclick="event.stopPropagation();deleteCd(${i})">Remove</button></div>`).join('');
+}
+function deleteCd(i){countdowns.splice(i,1);if(activeIdx>=countdowns.length)activeIdx=countdowns.length-1;renderSaved();if(activeIdx>=0)setActive(activeIdx);else{clearInterval(cdInterval);document.getElementById('cdDisplay').classList.remove('visible');}}
+function setActive(i){
+  activeIdx=i;
+  renderSaved();
+  clearInterval(cdInterval);
+  const target=new Date(countdowns[i].date+'T00:00:00');
+  document.getElementById('cdName').textContent=countdowns[i].name;
+  document.getElementById('cdDisplay').classList.add('visible');
+  function tick(){
+    const now=new Date();
+    const diff=target-now;
+    if(diff<=0){document.getElementById('cdGrid').innerHTML='<div class="cd-expired">This election date has passed.</div>';return;}
+    const d=Math.floor(diff/86400000);
+    const h=Math.floor((diff%86400000)/3600000);
+    const m=Math.floor((diff%3600000)/60000);
+    const s=Math.floor((diff%60000)/1000);
+    document.getElementById('cdDays').textContent=String(d).padStart(2,'0');
+    document.getElementById('cdHours').textContent=String(h).padStart(2,'0');
+    document.getElementById('cdMins').textContent=String(m).padStart(2,'0');
+    document.getElementById('cdSecs').textContent=String(s).padStart(2,'0');
+    document.getElementById('cdDateLbl').textContent='Target: '+target.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    document.getElementById('cdGrid').innerHTML=`<div class="cd-unit"><div class="cd-num">${String(d).padStart(2,'0')}</div><div class="cd-lbl">Days</div></div><div class="cd-unit"><div class="cd-num">${String(h).padStart(2,'0')}</div><div class="cd-lbl">Hours</div></div><div class="cd-unit"><div class="cd-num">${String(m).padStart(2,'0')}</div><div class="cd-lbl">Minutes</div></div><div class="cd-unit"><div class="cd-num">${String(s).padStart(2,'0')}</div><div class="cd-lbl">Seconds</div></div>`;
+  }
+  tick();cdInterval=setInterval(tick,1000);
+}
+// Load default preset
+addPreset('Bihar Assembly Election 2025','2025-10-15');
+</script>
+</body>
+</html>
