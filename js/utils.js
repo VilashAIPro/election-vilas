@@ -28,6 +28,17 @@ function isFutureDate(dateString) {
   return target > new Date();
 }
 
+/**
+ * Formats a date string to Indian locale (e.g., 1 May 2024).
+ * @param {string} dateStr 
+ * @returns {string}
+ */
+function formatIndianDate(dateStr) {
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return 'Invalid Date';
+  return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { getScoreMessage, isFutureDate };
+  module.exports = { getScoreMessage, isFutureDate, formatIndianDate };
 }

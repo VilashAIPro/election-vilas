@@ -1,4 +1,4 @@
-const { getScoreMessage, isFutureDate } = require('../js/utils');
+const { getScoreMessage, isFutureDate, formatIndianDate } = require('../js/utils');
 
 describe('Utility Functions', () => {
   describe('getScoreMessage', () => {
@@ -36,6 +36,16 @@ describe('Utility Functions', () => {
     test('handles invalid date strings gracefully', () => {
       expect(isFutureDate('invalid-date')).toBe(false);
       expect(isFutureDate('')).toBe(false);
+    });
+  });
+
+  describe('formatIndianDate', () => {
+    test('formats dates correctly for Indian locale', () => {
+      expect(formatIndianDate('2024-05-01')).toBe('1 May 2024');
+    });
+
+    test('returns invalid for bad input', () => {
+      expect(formatIndianDate('not-a-date')).toBe('Invalid Date');
     });
   });
 });

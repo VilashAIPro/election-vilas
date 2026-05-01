@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "election-process-94bdd"
-  }
+  },
+  "targets": {
+    "election-process-94bdd": {
+      "hosting": {
+        "prod": [
+          "voteiq"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

@@ -1,10 +1,17 @@
 {
   "hosting": {
+    "target": "prod",
     "public": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "firestore.rules",
+      "firestore.indexes.json",
+      "functions/**",
+      "old_index*.html",
+      "web.txt",
+      "vercel.json"
     ],
     "rewrites": [
       {
@@ -18,7 +25,7 @@
         "headers": [
           {
             "key": "Content-Security-Policy",
-            "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com;"
+            "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.gstatic.com https://cdn.skypack.dev; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://lh3.googleusercontent.com; connect-src 'self' https://www.google-analytics.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://generativelanguage.googleapis.com https://securetoken.googleapis.com https://cdn.skypack.dev;"
           },
           {
             "key": "X-Content-Type-Options",
@@ -30,10 +37,55 @@
           },
           {
             "key": "Strict-Transport-Security",
-            "value": "max-age=31536000; includeSubDomains"
+            "value": "max-age=31536000; includeSubDomains; preload"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "camera=(), microphone=(), geolocation=()"
+          }
+        ]
+      },
+      {
+        "source": "/js/*.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=86400"
+          }
+        ]
+      },
+      {
+        "source": "/css/*.css",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=86400"
           }
         ]
       }
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "auth": {
+    "providers": {
+      "anonymous": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "VoteIQ",
+        "supportEmail": "vilashkumarreddy799@gmail.com",
+        "authorizedRedirectUris": [
+          "https://election-process-94bdd.web.app",
+          "https://election-process-94bdd.firebaseapp.com",
+          "https://voteiq.web.app",
+          "https://voteiq.firebaseapp.com"
+        ]
+      }
+    }
   }
 }

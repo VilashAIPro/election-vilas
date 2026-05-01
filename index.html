@@ -11,6 +11,7 @@
 <meta property="og:description" content="Explore the complete Indian election process with interactive timelines, quizzes, and real-time countdowns.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#080D1A">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.gstatic.com https://cdn.skypack.dev; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://lh3.googleusercontent.com; connect-src 'self' https://www.google-analytics.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://generativelanguage.googleapis.com https://cdn.skypack.dev;">
 <!-- Preconnect for performance -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,19 +19,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VOTEIQ2024"></script>
-<script defer src="js/app.js"></script>
 <!-- Google Charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<!-- Firebase & Google Cloud Integrations -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-  const firebaseConfig = { apiKey: "DEMO_KEY", authDomain: "voteiq.firebaseapp.com", projectId: "voteiq", storageBucket: "voteiq.appspot.com", messagingSenderId: "123456789", appId: "1:123456789:web:abcde", measurementId: "G-VOTEIQ2024" };
-  try {
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  } catch(e) { console.warn('Firebase init error', e); }
-</script>
+<!-- Firebase Backend (Auth, Firestore, Analytics) -->
+<script type="module" src="js/backend.js"></script>
+<!-- Visuals & Gamification -->
+<script type="module" src="js/visuals.js"></script>
+<script type="module" src="js/badges.js"></script>
+<!-- Core Application Scripts -->
+<script src="js/app.js" defer></script>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -51,6 +48,7 @@
       <a class="nav-link" href="#faq" role="menuitem" data-testid="nav-faq">FAQ</a>
       <a class="nav-link" href="#quiz" role="menuitem" data-testid="nav-quiz">Quiz <span class="nav-badge" aria-label="10 questions">10 Qs</span></a>
       <a class="nav-link" href="#countdown" role="menuitem" data-testid="nav-countdown">Countdown</a>
+      <button class="btn-signin" id="btnSignIn" onclick="signIn()" aria-label="Sign in with Google">Sign In</button>
     </div>
     <button class="hamburger" onclick="toggleMobileNav()" id="ham" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobileNav" data-testid="hamburger-btn">
       <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
@@ -473,33 +471,74 @@
 
   <div class="saved-list" id="savedList" role="list" aria-label="Saved election countdowns"></div>
 </section>
+
+<!-- ACHIEVEMENTS SECTION -->
+<section id="achievements" class="achievements-section" aria-label="Your Achievements">
+  <div class="section-header">
+    <div class="section-tag">Progress</div>
+    <h2 class="section-title">Your Achievement Collection</h2>
+    <p class="section-sub">Earn badges as you explore the election process and test your knowledge.</p>
+  </div>
+  <div class="badges-grid" id="badgesCollection">
+    <!-- Rendered via badges.js -->
+  </div>
+</section>
 </main>
+
+<!-- FEEDBACK SECTION -->
+<section class="feedback-section" id="feedback" aria-label="User Feedback">
+  <div class="section-header">
+    <div class="section-tag">Community</div>
+    <h2 class="section-title">Share Your Feedback</h2>
+    <p class="section-sub">Help us improve VoteIQ. Your feedback is saved securely to Firebase.</p>
+  </div>
+  <div class="feedback-card" id="feedbackCard">
+    <div class="fb-stars" role="group" aria-label="Rate your experience">
+      <button class="fb-star" data-val="1" onclick="VoteIQ.rateStar(1)" aria-label="1 star">★</button>
+      <button class="fb-star" data-val="2" onclick="VoteIQ.rateStar(2)" aria-label="2 stars">★</button>
+      <button class="fb-star" data-val="3" onclick="VoteIQ.rateStar(3)" aria-label="3 stars">★</button>
+      <button class="fb-star" data-val="4" onclick="VoteIQ.rateStar(4)" aria-label="4 stars">★</button>
+      <button class="fb-star" data-val="5" onclick="VoteIQ.rateStar(5)" aria-label="5 stars">★</button>
+    </div>
+    <p id="fb-rating-lbl" class="fb-rating-lbl" aria-live="polite">Select a rating</p>
+    <textarea id="fbText" class="fb-textarea" placeholder="Tell us what you think..." maxlength="500" aria-label="Feedback message"></textarea>
+    <button class="btn-primary" id="fbSubmitBtn" onclick="VoteIQ.submitFeedback()" aria-label="Submit feedback">Submit Feedback</button>
+    <p id="fb-status" class="fb-status" aria-live="assertive"></p>
+  </div>
+</section>
 
 <div class="divider"></div>
 
-<footer>
+<footer role="contentinfo">
   <div class="footer-logo">VoteIQ</div>
   <p class="footer-sub">An interactive guide to India's election process.<br>Data for educational purposes. For official information visit eci.gov.in</p>
   <div class="footer-flag">
-    <div class="ff ff1"></div>
-    <div class="ff ff2"></div>
-    <div class="ff ff3"></div>
+    <div class="ff ff1"></div><div class="ff ff2"></div><div class="ff ff3"></div>
   </div>
 </footer>
 
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js').then(reg => {
-        console.log('ServiceWorker registration successful with scope: ', reg.scope);
-      }).catch(err => {
-        console.warn('ServiceWorker registration failed: ', err);
-      });
-    });
-  }
-</script>
-<script defer src="js/utils.js"></script>
-<script defer src="js/app.js"></script>
+<!-- AI ASSISTANT WIDGET -->
+<div id="ai-assistant" class="ai-widget" data-testid="ai-widget">
+  <button class="ai-toggle" id="aiToggle" onclick="toggleAI()" aria-label="Open VoteIQ Assistant" aria-expanded="false" aria-controls="aiBox">
+    <span aria-hidden="true">🤖</span>
+    <span class="ai-toggle-text">Ask Assistant</span>
+  </button>
+  <div class="ai-box" id="aiBox" aria-hidden="true">
+    <div class="ai-header">
+      <h3>VoteIQ Assistant</h3>
+      <button class="ai-close" onclick="toggleAI()" aria-label="Close Assistant">×</button>
+    </div>
+    <div class="ai-messages" id="aiMessages" role="log" aria-live="polite">
+      <div class="ai-msg bot">Hi! I'm the VoteIQ AI. Ask me anything about the Indian election process!</div>
+    </div>
+    <div class="ai-input-area">
+      <input type="text" id="aiInput" placeholder="How do I register to vote?" aria-label="Message to AI Assistant" onkeydown="if(event.key==='Enter')sendAIMsg()">
+      <button class="ai-send" onclick="sendAIMsg()" aria-label="Send message">Send</button>
+    </div>
+  </div>
+</div>
+
+</div>
 </body>
 </html>
 

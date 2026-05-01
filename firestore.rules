@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ——— USER PROFILES ———
+    // A user can only read and write their OWN profile document.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // ——— QUIZ RESULTS ———
+    // Anyone can create a quiz result (incl. anonymous).
+    // A logged-in user can read only their own results.
+    // Nobody can update or delete results (immutable audit trail).
+    match /quiz_results/{resultId} {
+      allow create: if true;
+      allow read: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // ——— FEEDBACK ———
+    // Anyone can submit feedback.
+    // Only admins can read all feedback (controlled via custom claims).
+    match /feedback/{feedbackId} {
+      allow create: if true;
+      allow read: if request.auth != null && request.auth.token.admin == true;
+      allow update, delete: if false;
+    }
+
+    // ——— VISIT LOGS ———
+    // Server-side write only (via admin SDK in a Cloud Function if needed).
+    // Clients can write but never read raw visit data.
+    match /visits/{visitId} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+
+    // ——— DENY ALL ELSE ———
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
