@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/VilashAIPro/election-process#readme",
   "devDependencies": {
+    "firebase-tools": "^15.16.0",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0"
   }
